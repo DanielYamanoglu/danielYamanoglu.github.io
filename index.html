@@ -259,14 +259,15 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px}
 @media(max-width:720px){.proj-grid{grid-template-columns:1fr}}
 .pcard{border:1px solid var(--border);border-radius:var(--rad);background:var(--surface);padding:20px;
-  transition:transform .15s ease-out,border-color .2s,background .2s;display:flex;flex-direction:column;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s,box-shadow .25s;display:flex;flex-direction:column;
   position:relative;overflow:hidden;height:100%}
+.pcard:hover{transform:translateY(-3px)}
 .pcard::before{content:"";position:absolute;inset:0;border-radius:var(--rad);pointer-events:none;
   background:radial-gradient(360px 200px at var(--cx,50%) var(--cy,50%),rgba(95,207,128,.08),transparent 60%);
   opacity:0;transition:opacity .3s;transform:translateZ(0)}
 .pcard::after{content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:.25s;transform:translateZ(1px)}
-.pcard:hover{border-color:var(--border-2);background:var(--surface-2)}
+.pcard:hover{border-color:var(--accent);background:var(--surface-2);box-shadow:0 20px 40px -20px rgba(95,207,128,.12)}
 .pcard:hover::before{opacity:1}
 .pcard:hover::after{opacity:.5}
 .pcard:active{transform:scale(.97)!important;border-color:var(--accent);background:var(--surface-2)}
@@ -276,8 +277,12 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
   transition:.3s}
 .pcard:hover .pcard-viz{background:radial-gradient(120% 80% at 100% 0%,rgba(95,207,128,.18),transparent 60%),var(--surface-2)}
 .pcard-viz svg{position:absolute;inset:0;width:100%;height:100%}
-.pcard-viz .pm{position:absolute;bottom:14px;left:18px;font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--accent);letter-spacing:1.2px;text-transform:uppercase;opacity:.85;display:flex;align-items:center;gap:6px}
-.pcard-viz .pm::before{content:"";width:12px;height:1px;background:var(--accent);opacity:.7}
+.pcard-viz .pm{position:absolute;bottom:14px;left:18px;font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--accent);letter-spacing:1.2px;text-transform:uppercase;opacity:.85;display:flex;align-items:center;gap:6px;transition:gap .25s ease}
+.pcard-viz .pm::before{content:"";width:12px;height:1px;background:var(--accent);opacity:.7;transition:width .25s ease}
+.pcard:hover .pcard-viz .pm{gap:10px}
+.pcard:hover .pcard-viz .pm::before{width:18px}
+.pcard-viz svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1),filter .35s ease}
+.pcard:hover .pcard-viz svg{transform:scale(1.04);filter:brightness(1.2) drop-shadow(0 0 8px rgba(95,207,128,.15))}
 .pcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
 .pcard-top h3{font-family:var(--sans);font-size:18px;font-weight:600;color:var(--fg);letter-spacing:-.3px}
 .pcard-top .st{font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid var(--border-2);padding:2px 9px;border-radius:20px;letter-spacing:.3px;white-space:nowrap}
@@ -365,39 +370,6 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 .proj-grid.rv.in .pcard:nth-child(4),.stack-grid.rv.in .stack-card:nth-child(4),.socials.rv.in .soc:nth-child(4){animation-delay:.26s}
 .proj-grid.rv.in .pcard:nth-child(5),.socials.rv.in .soc:nth-child(5){animation-delay:.33s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-
-/* =================== project viz animations =================== */
-@keyframes drawLine{from{stroke-dashoffset:var(--len,300)}to{stroke-dashoffset:0}}
-@keyframes fadeIn{from{opacity:0}to{opacity:var(--o,1)}}
-@keyframes pulseNode{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.15);opacity:1}}
-@keyframes pulseRing{0%{transform:scale(.8);opacity:.8}100%{transform:scale(1.8);opacity:0}}
-@keyframes flowDash{to{stroke-dashoffset:-12}}
-@keyframes floatUp{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
-.pcard-viz .a-draw{stroke-dasharray:300;stroke-dashoffset:300;animation:drawLine 1.4s cubic-bezier(.2,.8,.2,1) forwards}
-.pcard-viz .a-draw-s{stroke-dasharray:200;stroke-dashoffset:200;animation:drawLine 1.1s cubic-bezier(.2,.8,.2,1) .1s forwards}
-.pcard-viz .a-draw-d{stroke-dasharray:4 4;stroke-dashoffset:0;animation:flowDash 1.2s linear infinite}
-.pcard-viz .a-fade{opacity:0;animation:fadeIn .5s ease-out forwards;--o:1}
-.pcard-viz .a-fade-d1{opacity:0;animation:fadeIn .5s ease-out .25s forwards}
-.pcard-viz .a-fade-d2{opacity:0;animation:fadeIn .5s ease-out .5s forwards}
-.pcard-viz .a-fade-d3{opacity:0;animation:fadeIn .5s ease-out .75s forwards}
-.pcard-viz .a-fade-d4{opacity:0;animation:fadeIn .5s ease-out 1s forwards}
-.pcard-viz .a-fade-d5{opacity:0;animation:fadeIn .5s ease-out 1.25s forwards}
-.pcard-viz .a-pulse{transform-origin:center;transform-box:fill-box;animation:pulseNode 2.4s ease-in-out infinite}
-.pcard-viz .a-pulse-d{transform-origin:center;transform-box:fill-box;animation:pulseNode 2.4s ease-in-out .6s infinite}
-.pcard-viz .a-pulse-d2{transform-origin:center;transform-box:fill-box;animation:pulseNode 2.4s ease-in-out 1.2s infinite}
-.pcard-viz .a-ring{transform-origin:center;transform-box:fill-box;animation:pulseRing 2.2s ease-out infinite}
-.pcard-viz .a-float{transform-origin:center;transform-box:fill-box;animation:floatUp .6s cubic-bezier(.2,.8,.2,1) forwards;opacity:0}
-/* respect reduced motion */
-@media(prefers-reduced-motion:reduce){
-  .pcard-viz .a-draw,.pcard-viz .a-draw-s,.pcard-viz .a-fade,
-  .pcard-viz .a-fade-d1,.pcard-viz .a-fade-d2,.pcard-viz .a-fade-d3,
-  .pcard-viz .a-fade-d4,.pcard-viz .a-fade-d5,
-  .pcard-viz .a-pulse,.pcard-viz .a-pulse-d,.pcard-viz .a-pulse-d2,
-  .pcard-viz .a-ring,.pcard-viz .a-float{
-    animation:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important
-  }
-  .pcard-viz .a-draw-d{animation:none!important}
-}
 
 /* scrollbar */
 ::-webkit-scrollbar{width:10px;height:10px}
@@ -668,21 +640,22 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
           </defs>
           <rect width="400" height="140" fill="url(#grid-lo)"/>
           <g stroke="rgba(95,207,128,.4)" stroke-width="1" fill="none">
-            <line class="a-draw-s" x1="90" y1="65" x2="170" y2="38"/>
-            <line class="a-draw-s" x1="90" y1="65" x2="170" y2="92"/>
-            <line class="a-draw-s" x1="170" y1="38" x2="250" y2="65"/>
-            <line class="a-draw-s" x1="170" y1="92" x2="250" y2="65"/>
-            <line class="a-draw-s" x1="250" y1="65" x2="320" y2="45"/>
-            <line class="a-draw-s" x1="250" y1="65" x2="320" y2="85"/>
+            <line x1="90" y1="65" x2="170" y2="38"/>
+            <line x1="90" y1="65" x2="170" y2="92"/>
+            <line x1="170" y1="38" x2="250" y2="65"/>
+            <line x1="170" y1="92" x2="250" y2="65"/>
+            <line x1="250" y1="65" x2="320" y2="45"/>
+            <line x1="250" y1="65" x2="320" y2="85"/>
           </g>
-          <circle class="a-fade" cx="90" cy="65" r="6" fill="var(--accent)"/>
-          <circle class="a-fade-d1" cx="170" cy="38" r="4.5" fill="var(--accent)"/>
-          <circle class="a-fade-d1" cx="170" cy="92" r="4.5" fill="var(--accent)"/>
-          <circle class="a-fade-d2" cx="250" cy="65" r="5.5" fill="var(--accent)"/>
-          <circle class="a-fade-d3" cx="320" cy="45" r="3.5" fill="var(--accent)"/>
-          <circle class="a-fade-d3" cx="320" cy="85" r="3.5" fill="var(--accent)"/>
-          <circle class="a-ring" cx="90" cy="65" r="10" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity=".7"/>
-          <circle class="a-pulse" cx="90" cy="65" r="6" fill="var(--accent)"/>
+          <g fill="var(--accent)">
+            <circle cx="90" cy="65" r="6"/>
+            <circle cx="170" cy="38" r="4.5" opacity=".75"/>
+            <circle cx="170" cy="92" r="4.5" opacity=".75"/>
+            <circle cx="250" cy="65" r="5.5" opacity=".85"/>
+            <circle cx="320" cy="45" r="3.5" opacity=".6"/>
+            <circle cx="320" cy="85" r="3.5" opacity=".6"/>
+          </g>
+          <circle cx="90" cy="65" r="10" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity=".7"/>
         </svg><span class="pm">knowledge graph</span></div>
         <div class="pcard-top">
           <h3>Life OS</h3>
@@ -705,26 +678,26 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
           </defs>
           <rect width="400" height="140" fill="url(#grid-mf)"/>
           <g fill="var(--accent)" opacity=".18">
-            <circle class="a-fade" cx="80" cy="50" r="14"/>
-            <circle class="a-fade" cx="200" cy="70" r="22"/>
-            <circle class="a-fade" cx="320" cy="50" r="14"/>
-            <circle class="a-fade" cx="140" cy="105" r="10"/>
-            <circle class="a-fade" cx="260" cy="105" r="10"/>
+            <circle cx="80" cy="50" r="14"/>
+            <circle cx="200" cy="70" r="22"/>
+            <circle cx="320" cy="50" r="14"/>
+            <circle cx="140" cy="105" r="10"/>
+            <circle cx="260" cy="105" r="10"/>
           </g>
           <g fill="var(--accent)">
-            <circle class="a-fade-d1" cx="80" cy="50" r="6"/>
-            <circle class="a-fade-d3" cx="320" cy="50" r="6"/>
-            <circle class="a-fade-d2" cx="140" cy="105" r="4.5"/>
-            <circle class="a-fade-d2" cx="260" cy="105" r="4.5"/>
+            <circle cx="80" cy="50" r="6"/>
+            <circle cx="320" cy="50" r="6" opacity=".9"/>
+            <circle cx="140" cy="105" r="4.5" opacity=".75"/>
+            <circle cx="260" cy="105" r="4.5" opacity=".75"/>
+            <circle cx="200" cy="70" r="10"/>
           </g>
-          <circle class="a-pulse" cx="200" cy="70" r="10" fill="var(--accent)"/>
           <g stroke="var(--accent)" stroke-width="1" fill="none" opacity=".55" stroke-dasharray="3 5">
-            <line class="a-draw-d" x1="86" y1="50" x2="190" y2="70"/>
-            <line class="a-draw-d" x1="86" y1="50" x2="140" y2="105"/>
-            <line class="a-draw-d" x1="314" y1="50" x2="210" y2="70"/>
-            <line class="a-draw-d" x1="314" y1="50" x2="260" y2="105"/>
-            <line class="a-draw-d" x1="144" y1="105" x2="190" y2="70"/>
-            <line class="a-draw-d" x1="264" y1="105" x2="210" y2="70"/>
+            <line x1="86" y1="50" x2="190" y2="70"/>
+            <line x1="86" y1="50" x2="140" y2="105"/>
+            <line x1="314" y1="50" x2="210" y2="70"/>
+            <line x1="314" y1="50" x2="260" y2="105"/>
+            <line x1="144" y1="105" x2="190" y2="70"/>
+            <line x1="264" y1="105" x2="210" y2="70"/>
           </g>
         </svg><span class="pm">creator · brand match</span></div>
         <div class="pcard-top">
@@ -751,17 +724,17 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
           <g stroke="rgba(95,207,128,.12)" stroke-width="1">
             <line x1="0" y1="40" x2="400" y2="40"/><line x1="0" y1="80" x2="400" y2="80"/>
           </g>
-          <polyline class="a-draw" points="0,105 50,90 100,95 150,70 200,75 250,55 300,60 350,38 400,42"
+          <polyline points="0,105 50,90 100,95 150,70 200,75 250,55 300,60 350,38 400,42"
             fill="none" stroke="rgba(95,207,128,.5)" stroke-width="1.5" stroke-dasharray="4 4"/>
-          <polyline class="a-draw" style="--len:600;animation-delay:.4s" points="0,110 50,95 100,80 150,82 200,60 250,68 300,42 350,48 400,30"
+          <polyline points="0,110 50,95 100,80 150,82 200,60 250,68 300,42 350,48 400,30"
             fill="none" stroke="var(--accent)" stroke-width="1.8"/>
           <g fill="var(--accent)">
-            <circle class="a-fade-d3" cx="100" cy="80" r="2.5"/>
-            <circle class="a-fade-d4" cx="200" cy="60" r="2.5"/>
-            <circle class="a-fade-d5" cx="300" cy="42" r="2.5"/>
-            <circle class="a-fade-d5" cx="400" cy="30" r="2.5"/>
+            <circle cx="100" cy="80" r="2.5"/>
+            <circle cx="200" cy="60" r="2.5"/>
+            <circle cx="300" cy="42" r="2.5"/>
+            <circle cx="400" cy="30" r="2.5"/>
           </g>
-          <circle class="a-pulse-d" cx="400" cy="30" r="4" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity=".6"/>
+          <circle cx="400" cy="30" r="4" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity=".6"/>
         </svg><span class="pm">kalman + xgboost</span></div>
         <div class="pcard-top">
           <h3>FinRobot Hybrid</h3>
@@ -784,33 +757,35 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
           </defs>
           <rect width="400" height="140" fill="url(#grid-rg)"/>
           <g fill="none" stroke="var(--accent)" stroke-width="1.2" opacity=".5">
-            <rect class="a-fade" x="30" y="50" width="64" height="12" rx="2"/>
-            <rect class="a-fade-d1" x="30" y="68" width="64" height="12" rx="2"/>
-            <rect class="a-fade-d2" x="30" y="86" width="64" height="12" rx="2"/>
+            <rect x="30" y="50" width="64" height="12" rx="2"/>
+            <rect x="30" y="68" width="64" height="12" rx="2"/>
+            <rect x="30" y="86" width="64" height="12" rx="2"/>
           </g>
           <g fill="var(--accent)">
-            <rect class="a-fade-d2" x="38" y="54" width="6" height="4" rx="1"/>
-            <rect class="a-fade-d3" x="38" y="72" width="6" height="4" rx="1"/>
-            <rect class="a-fade-d4" x="38" y="90" width="6" height="4" rx="1"/>
+            <rect x="38" y="54" width="6" height="4" rx="1"/>
+            <rect x="38" y="72" width="6" height="4" rx="1"/>
+            <rect x="38" y="90" width="6" height="4" rx="1"/>
           </g>
           <g stroke="var(--accent)" stroke-width="1" fill="none" opacity=".6" stroke-dasharray="3 4">
-            <path class="a-draw-d" d="M94 56 L 168 70"/>
-            <path class="a-draw-d" style="animation-delay:.3s" d="M94 74 L 168 70"/>
-            <path class="a-draw-d" style="animation-delay:.6s" d="M94 92 L 168 70"/>
-          </g>
-          <circle cx="195" cy="70" r="14" fill="var(--accent)" opacity=".18" class="a-fade-d2"/>
-          <circle class="a-pulse" cx="195" cy="70" r="6" fill="var(--accent)"/>
-          <circle class="a-pulse-d" cx="195" cy="70" r="3" fill="var(--accent)"/>
-          <g stroke="var(--accent)" stroke-width="1" fill="none" opacity=".65">
-            <line class="a-draw" x1="222" y1="70" x2="296" y2="70"/>
-            <polyline class="a-fade-d4" points="294,66 302,70 294,74" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M94 56 L 168 70"/>
+            <path d="M94 74 L 168 70"/>
+            <path d="M94 92 L 168 70"/>
           </g>
           <g fill="var(--accent)">
-            <rect class="a-fade-d4" x="320" y="58" width="60" height="24" rx="3" opacity=".22"/>
-            <rect class="a-fade-d4" x="320" y="58" width="60" height="24" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity=".85"/>
-            <circle class="a-fade-d5" cx="330" cy="70" r="2"/>
-            <rect class="a-fade-d5" x="338" y="68" width="36" height="1.5" opacity=".6"/>
-            <rect class="a-fade-d5" x="338" y="73" width="28" height="1.5" opacity=".4"/>
+            <circle cx="195" cy="70" r="14" opacity=".18"/>
+            <circle cx="195" cy="70" r="6"/>
+            <circle cx="195" cy="70" r="3" opacity=".7"/>
+          </g>
+          <g stroke="var(--accent)" stroke-width="1" fill="none" opacity=".65">
+            <line x1="222" y1="70" x2="296" y2="70"/>
+            <polyline points="294,66 302,70 294,74" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g fill="var(--accent)">
+            <rect x="320" y="58" width="60" height="24" rx="3" opacity=".22"/>
+            <rect x="320" y="58" width="60" height="24" rx="3" fill="none" stroke="var(--accent)" stroke-width="1.2" opacity=".85"/>
+            <circle cx="330" cy="70" r="2"/>
+            <rect x="338" y="68" width="36" height="1.5" opacity=".6"/>
+            <rect x="338" y="73" width="28" height="1.5" opacity=".4"/>
           </g>
         </svg><span class="pm">retrieve · rerank · generate</span></div>
         <div class="pcard-top">
@@ -919,31 +894,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 </footer>
 
 <script>
-/* ============ project card 3D tilt ============ */
-(function(){
-  if(matchMedia('(hover:none)').matches)return;
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  document.querySelectorAll('.pcard').forEach(card=>{
-    let raf=null;
-    card.addEventListener('mouseenter',()=>{card.style.willChange='transform'});
-    card.addEventListener('mousemove',e=>{
-      const r=card.getBoundingClientRect();
-      const px=(e.clientX-r.left)/r.width;
-      const py=(e.clientY-r.top)/r.height;
-      const rx=(py-.5)*-10;
-      const ry=(px-.5)*10;
-      if(raf)cancelAnimationFrame(raf);
-      raf=requestAnimationFrame(()=>{
-        card.style.transform=`perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-      });
-    });
-    card.addEventListener('mouseleave',()=>{
-      if(raf)cancelAnimationFrame(raf);
-      card.style.transform='';
-      card.style.willChange='';
-    });
-  });
-})();
+/* ============ card spotlight (per-card radial glow) ============ */
 
 /* ============ mouse spotlight (global) ============ */
 (function(){
