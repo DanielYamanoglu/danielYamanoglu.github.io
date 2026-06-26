@@ -365,52 +365,36 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 .foot a:hover{color:var(--fg-2)}
 
 /* =================== section reveals =================== */
-.rv{opacity:0;transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1),filter .8s ease}
-.rv.in{opacity:1;transform:none;filter:none}
-/* about: slide from left + fade */
-#about .rv{transform:translateX(-28px)}
-/* experience: slide from right + fade */
-#experience .rv{transform:translateX(28px)}
-/* projects: scale up from 0.92 + fade */
-#projects .rv{transform:scale(.94);filter:blur(2px)}
-/* stack: rotate subtle + fade */
-#stack .rv{transform:perspective(800px) rotateY(-6deg);transform-origin:left center;filter:blur(1.5px)}
-/* contact: clip-path reveal */
-#contact .rv{transform:translateY(24px) scale(.98)}
-/* stagger children of grids — projects */
-.proj-grid.rv.in .pcard{animation:cardIn .7s cubic-bezier(.2,.8,.2,1) both}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+/* stagger children of grids */
+.proj-grid.rv.in .pcard{animation:cardIn .65s cubic-bezier(.2,.8,.2,1) both}
 .proj-grid.rv.in .pcard:nth-child(1){animation-delay:.05s}
-.proj-grid.rv.in .pcard:nth-child(2){animation-delay:.15s}
-.proj-grid.rv.in .pcard:nth-child(3){animation-delay:.25s}
-.proj-grid.rv.in .pcard:nth-child(4){animation-delay:.35s}
-/* stack cards stagger with rotate */
-.stack-grid.rv.in .stack-card{animation:stackIn .65s cubic-bezier(.2,.8,.2,1) both}
+.proj-grid.rv.in .pcard:nth-child(2){animation-delay:.14s}
+.proj-grid.rv.in .pcard:nth-child(3){animation-delay:.23s}
+.proj-grid.rv.in .pcard:nth-child(4){animation-delay:.32s}
+.stack-grid.rv.in .stack-card{animation:stackIn .6s cubic-bezier(.2,.8,.2,1) both}
 .stack-grid.rv.in .stack-card:nth-child(1){animation-delay:.05s}
-.stack-grid.rv.in .stack-card:nth-child(2){animation-delay:.15s}
-.stack-grid.rv.in .stack-card:nth-child(3){animation-delay:.25s}
-.stack-grid.rv.in .stack-card:nth-child(4){animation-delay:.35s}
-/* social links stagger */
-.socials.rv.in .soc{animation:socIn .55s cubic-bezier(.2,.8,.2,1) both}
+.stack-grid.rv.in .stack-card:nth-child(2){animation-delay:.13s}
+.stack-grid.rv.in .stack-card:nth-child(3){animation-delay:.21s}
+.stack-grid.rv.in .stack-card:nth-child(4){animation-delay:.29s}
+.socials.rv.in .soc{animation:socIn .5s cubic-bezier(.2,.8,.2,1) both}
 .socials.rv.in .soc:nth-child(1){animation-delay:.05s}
-.socials.rv.in .soc:nth-child(2){animation-delay:.13s}
-.socials.rv.in .soc:nth-child(3){animation-delay:.21s}
-/* timeline stagger */
-.timeline.rv.in .tl-item{animation:tlIn .6s cubic-bezier(.2,.8,.2,1) both}
+.socials.rv.in .soc:nth-child(2){animation-delay:.12s}
+.socials.rv.in .soc:nth-child(3){animation-delay:.19s}
+.timeline.rv.in .tl-item{animation:tlIn .55s cubic-bezier(.2,.8,.2,1) both}
 .timeline.rv.in .tl-item:nth-child(1){animation-delay:.05s}
-.timeline.rv.in .tl-item:nth-child(2){animation-delay:.18s}
-.timeline.rv.in .tl-item:nth-child(3){animation-delay:.31s}
-.timeline.rv.in .tl-item:nth-child(4){animation-delay:.44s}
-/* about edu-cards stagger */
-.about-grid.rv.in .edu-card{animation:eduIn .55s cubic-bezier(.2,.8,.2,1) both}
-.about-grid.rv.in .edu-card:nth-child(1){animation-delay:.15s}
-.about-grid.rv.in .edu-card:nth-child(2){animation-delay:.28s}
-@keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
-@keyframes stackIn{from{opacity:0;transform:translateY(16px) rotateX(-4deg)}to{opacity:1;transform:none}}
-@keyframes socIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
-@keyframes tlIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
-@keyframes eduIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.timeline.rv.in .tl-item:nth-child(2){animation-delay:.16s}
+.about-grid.rv.in .edu-card{animation:eduIn .5s cubic-bezier(.2,.8,.2,1) both}
+.about-grid.rv.in .edu-card:nth-child(1){animation-delay:.12s}
+.about-grid.rv.in .edu-card:nth-child(2){animation-delay:.22s}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes stackIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes socIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes tlIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@keyframes eduIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){
-  .rv{transform:none!important;filter:none!important;transition:none!important}
+  .rv{transform:none!important;transition:none!important}
   .rv.in{animation:none!important}
   .proj-grid.rv.in .pcard,.stack-grid.rv.in .stack-card,
   .socials.rv.in .soc,.timeline.rv.in .tl-item,.about-grid.rv.in .edu-card{animation:none!important}
