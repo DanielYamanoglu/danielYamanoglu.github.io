@@ -1080,7 +1080,6 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
   const io=new IntersectionObserver((es)=>es.forEach(e=>{
     if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-  // test mode: ?test reveals all immediately
   if(location.search.includes('test')){
     setTimeout(()=>document.querySelectorAll('.rv').forEach(el=>el.classList.add('in')),100);
   }
