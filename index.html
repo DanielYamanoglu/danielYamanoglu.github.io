@@ -201,14 +201,13 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .btn:hover .ar{transform:translateX(3px)}
 .btn.p .ar{color:rgba(0,0,0,.5)}
 /* hero portrait */
-.hportrait{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--border);
-  background:var(--surface);box-shadow:0 40px 80px -50px rgba(0,0,0,.9);aspect-ratio:3/4}
-.hportrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 25%;filter:grayscale(.15) contrast(1.05) brightness(.95)}
-.hportrait::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(8,8,10,.45) 100%),
-  radial-gradient(420px 280px at 70% 20%,rgba(95,207,128,.08),transparent 70%);pointer-events:none}
-.hportrait .frame{position:absolute;inset:0;border-radius:16px;pointer-events:none;
+.hportrait{position:relative;border-radius:50%;overflow:hidden;border:2px solid var(--accent);
+  background:var(--surface);box-shadow:0 30px 60px -30px rgba(95,207,128,.25);aspect-ratio:1}
+.hportrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:grayscale(.15) contrast(1.05) brightness(.95)}
+.hportrait::after{content:"";position:absolute;inset:0;background:radial-gradient(420px 280px at 70% 20%,rgba(95,207,128,.08),transparent 70%);pointer-events:none}
+.hportrait .frame{position:absolute;inset:0;border-radius:50%;pointer-events:none;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);animation:frameGlow 4s ease-in-out infinite}
-@keyframes frameGlow{0%,100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}50%{box-shadow:inset 0 0 0 1px rgba(95,207,128,.08)}}
+@keyframes frameGlow{0%,100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}50%{box-shadow:inset 0 0 0 1px rgba(95,207,128,.15)}}
 .hportrait{animation:portraitIn .8s cubic-bezier(.2,.8,.2,1) .3s both}
 @keyframes portraitIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
 #hero .rv.in{animation:heroFadeUp .6s cubic-bezier(.2,.8,.2,1) both}
