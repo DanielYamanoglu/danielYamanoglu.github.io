@@ -340,6 +340,9 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 #project-inspector .pi-contribution-text{font-size:12px;line-height:1.5;color:var(--fg-2)}
 #project-inspector .pi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding-top:11px;border-top:1px solid var(--border)}
 #project-inspector .pi-cell{min-width:0}
+#project-inspector .pi-repo{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;border:1px solid var(--border);border-radius:7px;padding:7px 11px;background:rgba(95,207,128,.045);transition:.16s}
+#project-inspector .pi-repo:hover{border-color:var(--accent);background:rgba(95,207,128,.12)}
+#project-inspector .pi-repo[hidden]{display:none}
 #project-inspector .pi-label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--dim-2);margin-bottom:3px}
 #project-inspector .pi-value{display:block;color:var(--fg-2);font-family:var(--mono);font-size:10.5px;font-weight:500;line-height:1.35;overflow-wrap:anywhere}
 @media(max-width:520px){
@@ -935,6 +938,125 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         </div>
       </article>
 
+
+      <article class="pcard" data-project="ftsdoc" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="FtsDoc document intelligence">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-fd" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="140" fill="url(#grid-fd)"/>
+          <g font-family="ui-monospace,monospace">
+            <g transform="translate(34,28)">
+              <rect width="62" height="82" rx="3" fill="rgba(95,207,128,.05)" stroke="rgba(95,207,128,.4)" stroke-width=".8"/>
+              <g stroke="rgba(200,200,208,.35)" stroke-width="2" stroke-linecap="round">
+                <line x1="9" y1="14" x2="48" y2="14"/><line x1="9" y1="24" x2="40" y2="24"/><line x1="9" y1="34" x2="52" y2="34"/><line x1="9" y1="44" x2="36" y2="44"/>
+              </g>
+              <rect x="7" y="52" width="30" height="8" rx="1.5" fill="rgba(95,207,128,.22)"/>
+              <rect x="7" y="64" width="42" height="8" rx="1.5" fill="rgba(95,207,128,.14)"/>
+              <text x="0" y="-6" font-size="5" fill="var(--dim)" opacity=".7">invoice.pdf</text>
+            </g>
+            <g stroke="var(--accent)" stroke-width=".8" fill="none" opacity=".6"><path d="M104,69 L150,69"/><polyline points="147,66 150,69 147,72"/></g>
+            <g transform="translate(158,46)">
+              <rect width="74" height="46" rx="3" fill="rgba(95,207,128,.08)" stroke="var(--accent)" stroke-width=".9"/>
+              <text x="37" y="20" font-size="6.5" fill="var(--accent)" text-anchor="middle" font-weight="700">BERT NER</text>
+              <text x="37" y="32" font-size="4.8" fill="var(--dim)" text-anchor="middle">B-ORG · B-DATE · B-MONEY</text>
+            </g>
+            <g stroke="var(--accent)" stroke-width=".8" fill="none" opacity=".6"><path d="M240,69 L270,69"/><polyline points="267,66 270,69 267,72"/></g>
+            <g transform="translate(278,30)">
+              <rect width="94" height="78" rx="3" fill="rgba(95,207,128,.05)" stroke="rgba(95,207,128,.45)" stroke-width=".8"/>
+              <text x="7" y="14" font-size="5.5" fill="var(--fg-2)">{</text>
+              <text x="12" y="25" font-size="5.2" fill="var(--accent)">"doc_type": "invoice",</text>
+              <text x="12" y="36" font-size="5.2" fill="var(--fg-2)">"vendor": "Garnet Labs",</text>
+              <text x="12" y="47" font-size="5.2" fill="var(--fg-2)">"total": "EUR 81,443",</text>
+              <text x="12" y="58" font-size="5.2" fill="var(--fg-2)">"backend": "offline"</text>
+              <text x="7" y="69" font-size="5.5" fill="var(--fg-2)">}</text>
+            </g>
+          </g>
+        </svg><span class="pm">extract · structure · validate</span></div>
+        <div class="pcard-top">
+          <h3>FtsDoc</h3>
+        </div>
+        <div class="pcard-b">
+          Document intelligence pipeline that turns CVs, invoices, contracts and technical documents into typed JSON with a fine-tuned transformer and LangChain.
+        </div>
+        <div class="pcard-meta">
+          <span class="meta-label">impact</span> &nbsp; 8 entity types · offline + LLM backends · 20 tests
+        </div>
+        <div class="tags">
+          <span>Transformers</span><span>LangChain</span><span>Pydantic</span><span>FastAPI</span>
+        </div>
+      </article>
+
+      <article class="pcard" data-project="pdm" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Predictive maintenance telemetry pipeline">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-pm" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="140" fill="url(#grid-pm)"/>
+          <g stroke="rgba(95,207,128,.14)" stroke-width=".7"><line x1="34" y1="40" x2="370" y2="40"/><line x1="34" y1="104" x2="370" y2="104"/></g>
+          <rect x="250" y="30" width="34" height="84" fill="rgba(224,175,104,.08)"/>
+          <polyline points="34,92 60,90 86,93 112,89 138,91 164,88 190,90 216,86 242,87 256,70 266,96 280,80 296,78 322,70 346,60 370,48"
+            fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
+          <polyline points="34,98 370,98" fill="none" stroke="rgba(95,207,128,.35)" stroke-width="1" stroke-dasharray="4 3"/>
+          <g fill="#e0af68"><circle cx="256" cy="70" r="2.4"/><circle cx="266" cy="96" r="2.4"/><circle cx="346" cy="60" r="2.4"/></g>
+          <g font-family="ui-monospace,monospace" font-size="6" fill="var(--dim)" opacity=".75">
+            <text x="38" y="34">vibration rms · modbus / mqtt</text><text x="322" y="128">time →</text><text x="252" y="26" fill="#e0af68">anomaly</text>
+          </g>
+        </svg><span class="pm">telemetry · anomaly · failure risk</span></div>
+        <div class="pcard-top">
+          <h3>Predictive Maintenance Telemetry</h3>
+        </div>
+        <div class="pcard-b">
+          Modbus TCP and MQTT ingestion, validation and feature windows feeding anomaly detection and failure-risk models on a simulated plant.
+        </div>
+        <div class="pcard-meta">
+          <span class="meta-label">impact</span> &nbsp; ROC-AUC 0.989 · 4.5–9 h early warning · held-out machines
+        </div>
+        <div class="tags">
+          <span>Modbus</span><span>MQTT</span><span>scikit-learn</span><span>Docker</span>
+        </div>
+      </article>
+
+      <article class="pcard" data-project="turnover" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Employee turnover prediction with SHAP">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-to" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="140" fill="url(#grid-to)"/>
+          <line x1="230" y1="26" x2="230" y2="116" stroke="rgba(200,200,208,.25)" stroke-width=".8"/>
+          <g font-family="ui-monospace,monospace" font-size="6" fill="var(--fg-2)" opacity=".7" text-anchor="end">
+            <text x="150" y="38">overtime</text><text x="150" y="58">stock options</text><text x="150" y="78">prev. employers</text><text x="150" y="98">income</text>
+          </g>
+          <g>
+            <rect x="230" y="32" width="92" height="9" rx="2" fill="var(--accent)" opacity=".85"/>
+            <rect x="174" y="52" width="56" height="9" rx="2" fill="rgba(95,207,128,.35)"/>
+            <rect x="230" y="72" width="64" height="9" rx="2" fill="var(--accent)" opacity=".65"/>
+            <rect x="190" y="92" width="40" height="9" rx="2" fill="rgba(95,207,128,.35)"/>
+          </g>
+          <g font-family="ui-monospace,monospace" font-size="6" fill="var(--dim)" opacity=".75">
+            <text x="236" y="124">SHAP impact →</text><text x="330" y="40" fill="var(--accent)">risk ↑</text>
+          </g>
+        </svg><span class="pm">xgboost · shap explanations</span></div>
+        <div class="pcard-top">
+          <h3>Employee Turnover Prediction</h3>
+        </div>
+        <div class="pcard-b">
+          XGBoost attrition model with SHAP explanations and a Streamlit dashboard, re-implemented on public data from my internship work.
+        </div>
+        <div class="pcard-meta">
+          <span class="meta-label">impact</span> &nbsp; 91.7% accuracy (internship) · explainable drivers
+        </div>
+        <div class="tags">
+          <span>XGBoost</span><span>SHAP</span><span>Streamlit</span><span>Python</span>
+        </div>
+      </article>
+
       <!-- FinRobot is intentionally omitted from the public project index.
       <article class="pcard" data-project="finrobot" tabindex="0" aria-label="FinRobot Hybrid trading research project">
         <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -1104,6 +1226,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <div class="pi-cell"><span class="pi-label"></span><strong class="pi-value"></strong></div>
         <div class="pi-cell"><span class="pi-label"></span><strong class="pi-value"></strong></div>
       </div>
+      <a class="pi-repo" href="#" target="_blank" rel="noopener" hidden>view code on GitHub <span aria-hidden="true">↗</span></a>
     </aside>
     </div>
   </div>
@@ -1235,10 +1358,11 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
     thesis:{
       kicker:'THESIS · 2-DOF MANIPULATOR',
       title:'EKF-integrated Fuzzy-CTC',
-      summary:'A control architecture that combines state estimation with fuzzy compensation around a computed-torque controller.',
+      summary:'A control architecture that combines state estimation with fuzzy compensation around a computed-torque controller. MATLAB original plus a NumPy port.',
       contribution:'Designed and simulated the controller, EKF state estimation, and fuzzy compensation loop for the nonlinear manipulator.',
       evidence:'02 visual outputs',
-      cells:[['control','CTC + Fuzzy'],['state','EKF'],['signal','joint q1 / q2']],
+      repo:'https://github.com/DanielYamanoglu/ekf-fuzzy-ctc-manipulator',
+      cells:[['disturbance','−12.5% peak'],['step error','−8.9% RMS'],['EKF bound','95.5%']],
       media:[
         {src:'assets/projects/ekf-state-estimation.png',alt:'Fuzzy-CTC state estimation performance plots',label:'state estimation'},
         {src:'assets/projects/ekf-baseline-vs-fuzzy.png',alt:'Baseline versus Fuzzy CTC comparison plots',label:'baseline vs fuzzy'}
@@ -1247,10 +1371,11 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
     lifeos:{
       kicker:'LIFE OS · GRAPH MEMORY',
       title:'Capture → graph → retrieve',
-      summary:'A personal knowledge system where agents capture, categorize, and retrieve information through a Neo4j memory layer.',
-      contribution:'Built the capture-to-memory flow around Telegram inputs, agent routing, and a Neo4j graph layer.',
+      summary:'A personal knowledge system where agents capture, categorize, and retrieve information through a Neo4j graph and Qdrant vectors, with provenance for every result.',
+      contribution:'Built the capture-to-memory flow, agent routing, hybrid graph + vector retrieval and an MCP server.',
       evidence:'02 visual outputs',
-      cells:[['agents','3 agents'],['memory','Neo4j'],['input','Telegram']],
+      repo:'https://github.com/DanielYamanoglu/lifeos',
+      cells:[['recall@5','0.955 hybrid'],['agents','3 + MCP'],['tests','32 passing']],
       media:[
         {src:'assets/projects/lifeos-flow.svg',alt:'Life OS agentic knowledge system flow diagram',label:'system flow'},
         {src:'assets/projects/lifeos-knowledge-graph.png',alt:'Life OS knowledge graph visualization',label:'knowledge graph'}
@@ -1259,9 +1384,53 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
     matchfluence:{
       kicker:'MATCHFLUENCE · B2B SAAS',
       title:'Creator ↔ brand matching',
-      summary:'Backend systems for creator and brand data, matching workflows, and dashboard APIs in a social-commerce platform.',
+      summary:'Backend systems for creator and brand data, matching workflows, and dashboard APIs. Matching uses pgvector retrieval plus an explainable hybrid re-rank.',
       contribution:'Built backend infrastructure, creator/brand data models, matching workflows, and dashboard APIs.',
-      cells:[['backend','Supabase'],['web','Next.js'],['client','Flutter']]
+      evidence:'02 visual outputs',
+      repo:'https://github.com/DanielYamanoglu/matchfluence-matching',
+      cells:[['nDCG@10','0.861 hybrid'],['retrieval','pgvector'],['backend','Supabase']],
+      media:[
+        {src:'assets/work/matchfluence/architecture.svg',alt:'Matching architecture: brief, embedding, pgvector retrieval, hybrid re-rank',label:'architecture'},
+        {src:'assets/work/matchfluence/retrieval_quality.webp',alt:'Retrieval quality: random vs semantic vs hybrid',label:'retrieval quality'}
+      ]
+    },
+    ftsdoc:{
+      kicker:'FTSDOC · DOCUMENT AI',
+      title:'Documents → typed JSON',
+      summary:'CVs, invoices, contracts and spec sheets are classified, entity-tagged by a fine-tuned transformer and turned into typed JSON through a LangChain pipeline.',
+      contribution:'Built the BIO-labelled data generator, NER fine-tuning, LangChain structured extraction, CLI and API.',
+      evidence:'01 visual output',
+      repo:'https://github.com/DanielYamanoglu/ftsdoc',
+      cells:[['entities','8 types'],['fine-tune','2.8 min CPU'],['tests','20 passing']],
+      media:[
+        {src:'assets/work/ftsdoc/pipeline.svg',alt:'FtsDoc document intelligence pipeline',label:'pipeline'}
+      ]
+    },
+    pdm:{
+      kicker:'INDUSTRIAL IoT · PREDICTIVE MAINTENANCE',
+      title:'Modbus / MQTT → failure risk',
+      summary:'PLC registers and MQTT telemetry are validated, resampled and windowed, then scored by anomaly and failure-within-4h models on held-out machines.',
+      contribution:'Reference build of the telemetry pipelines I worked on during my industrial internship, on a simulated plant.',
+      evidence:'02 visual outputs',
+      repo:'https://github.com/DanielYamanoglu/predictive-maintenance-telemetry',
+      cells:[['ROC-AUC','0.989'],['early warning','4.5–9 h'],['tests','17 passing']],
+      media:[
+        {src:'assets/work/pdm/sensor_traces_anomalies.webp',alt:'Sensor traces with detected anomalies',label:'anomaly detection'},
+        {src:'assets/work/pdm/classifier_eval.webp',alt:'Failure classifier evaluation on held-out machines',label:'classifier eval'}
+      ]
+    },
+    turnover:{
+      kicker:'APPLIED ML · EXPLAINABILITY',
+      title:'Turnover risk + SHAP',
+      summary:'XGBoost attrition model with SHAP explanations and a Streamlit dashboard. The internship model reached 91.7% accuracy on company data; this public version uses the IBM HR dataset.',
+      contribution:'Trained and deployed the XGBoost turnover model behind an HR people-analytics dashboard.',
+      evidence:'02 visual outputs',
+      repo:'https://github.com/DanielYamanoglu/employee-turnover-prediction',
+      cells:[['internship','91.7% acc'],['public CV','0.854 acc'],['explain','SHAP']],
+      media:[
+        {src:'assets/work/turnover/shap_summary.webp',alt:'SHAP summary plot',label:'SHAP drivers'},
+        {src:'assets/work/turnover/roc_curve.webp',alt:'ROC curve',label:'ROC curve'}
+      ]
     },
     rag:{
       kicker:'RAG · RESEARCH',
@@ -1352,6 +1521,9 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       cell.querySelector('.pi-label').textContent=pair[0];
       cell.querySelector('.pi-value').textContent=pair[1];
     });
+    const repo=inspector.querySelector('.pi-repo');
+    repo.hidden=!data.repo;
+    if(data.repo)repo.href=data.repo;
     inspector.setAttribute('aria-hidden','false');
     inspector.classList.add('show');
   }
