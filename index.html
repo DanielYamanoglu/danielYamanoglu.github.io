@@ -650,6 +650,70 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
   .drawer{width:100%}
   .inspect-note{display:block;margin-top:6px;white-space:normal}
 }
+/* ---------- nav: scroll progress, active section, local time, ⌘K hint ---------- */
+.nav-progress{position:absolute;left:0;bottom:-1px;height:1px;width:100%;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--accent),var(--accent-soft));box-shadow:0 0 8px rgba(95,207,128,.5);pointer-events:none}
+.links a.active{color:var(--fg)}
+.links a.active .s{color:var(--accent)}
+.status .clock{color:var(--dim-2)}
+.kbd-hint{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:11px;color:var(--dim);background:var(--surface);
+  border:1px solid var(--border);border-radius:6px;padding:4px 8px;cursor:pointer;transition:.16s}
+.kbd-hint:hover{color:var(--accent);border-color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:12px}
+@media(max-width:980px){.kbd-hint{display:none}}
+/* ---------- toast ---------- */
+.toast{position:fixed;left:50%;bottom:28px;z-index:300;transform:translate(-50%,16px);opacity:0;pointer-events:none;
+  font-family:var(--mono);font-size:12px;color:var(--fg);background:var(--surface-2);border:1px solid var(--accent);border-radius:9px;
+  padding:9px 14px;box-shadow:0 18px 40px -18px rgba(0,0,0,.8),0 0 18px rgba(95,207,128,.15);transition:opacity .2s,transform .2s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast::before{content:"✓ ";color:var(--accent)}
+/* ---------- email copy ---------- */
+.soc-wrap{position:relative}
+.soc-copy{position:absolute;right:42px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10.5px;color:var(--dim);
+  background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;padding:4px 9px;cursor:pointer;transition:.16s;z-index:2}
+.soc-copy:hover{color:var(--accent);border-color:var(--accent)}
+/* ---------- inspector: share link + mobile bottom sheet ---------- */
+#project-inspector .pi-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#project-inspector .pi-share{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-family:var(--mono);font-size:11.5px;color:var(--dim);
+  border:1px solid var(--border);border-radius:7px;padding:7px 11px;background:transparent;cursor:pointer;transition:.16s}
+#project-inspector .pi-share:hover{color:var(--accent);border-color:var(--accent)}
+.pi-sheet-bar{display:none}
+.sheet-backdrop{position:fixed;inset:0;z-index:148;background:rgba(4,4,6,.62);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s}
+.sheet-backdrop.on{opacity:1;pointer-events:auto}
+@media(max-width:980px){
+  #project-inspector{display:none}
+  #project-inspector.sheet{display:block;position:fixed;left:0;right:0;bottom:0;top:auto;z-index:150;margin:0;max-height:86svh;overflow-y:auto;
+    border-radius:18px 18px 0 0;padding-top:10px;animation:sheetUp .32s cubic-bezier(.2,.8,.2,1)}
+  #project-inspector.sheet .pi-sheet-bar{display:flex;align-items:center;justify-content:space-between;position:sticky;top:-10px;z-index:3;
+    margin:-10px -20px 12px;padding:10px 16px;background:rgba(16,16,20,.96);border-bottom:1px solid var(--border)}
+  .pi-sheet-bar .grip{width:38px;height:4px;border-radius:4px;background:var(--border-2);position:absolute;left:50%;top:5px;transform:translateX(-50%)}
+  .pi-sheet-bar button{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--fg-2);background:var(--surface);border:1px solid var(--border-2);border-radius:8px;padding:6px 11px;cursor:pointer}
+  body.sheet-open{overflow:hidden}
+  body.sheet-open #projects{z-index:150}
+}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+/* ---------- lightbox navigation ---------- */
+.media-lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border-radius:10px;
+  border:1px solid var(--border-2);background:rgba(16,16,20,.9);color:var(--fg);font-family:var(--mono);font-size:16px;cursor:pointer;display:none}
+.media-lightbox.pinned.has-nav .media-lightbox-nav{display:block}
+.media-lightbox-nav.prev{left:18px}
+.media-lightbox-nav.next{right:18px}
+.media-lightbox-nav:hover{border-color:var(--accent);color:var(--accent)}
+/* ---------- command palette ---------- */
+.cmdk{position:fixed;inset:0;z-index:260;display:none;align-items:flex-start;justify-content:center;padding:14vh 16px 16px;background:rgba(4,4,6,.66);backdrop-filter:blur(6px)}
+.cmdk.open{display:flex}
+.cmdk-box{width:min(560px,100%);background:linear-gradient(145deg,rgba(20,20,26,.99),rgba(12,12,15,.98));border:1px solid var(--border-2);border-radius:14px;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85),0 0 30px rgba(95,207,128,.1);overflow:hidden;animation:piIn .2s ease-out}
+.cmdk-in{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.cmdk-in span{color:var(--accent);font-family:var(--mono)}
+.cmdk-in input{flex:1;background:none;border:0;outline:0;color:var(--fg);font-family:var(--mono);font-size:14px}
+.cmdk-list{list-style:none;margin:0;padding:6px;max-height:50vh;overflow-y:auto}
+.cmdk-list li{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--fg-2)}
+.cmdk-list li .g{font-family:var(--mono);font-size:10px;color:var(--dim-2);text-transform:uppercase;letter-spacing:.8px;margin-left:auto}
+.cmdk-list li[aria-selected="true"]{background:var(--accent-dim);color:var(--fg)}
+.cmdk-list li[aria-selected="true"] .g{color:var(--accent)}
+.cmdk-empty{padding:14px 16px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.cmdk-foot{display:flex;gap:14px;padding:9px 16px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10.5px;color:var(--dim-2)}
 /* reduced motion: keep only small, slow, non-moving ambient animations (overrides the global kill switch above) */
 @media(prefers-reduced-motion:reduce){
   .pcard-viz [stroke-dasharray]{animation-duration:2.4s!important}
@@ -672,6 +736,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 <div id="spotlight" aria-hidden="true"></div>
 <div id="media-lightbox" class="media-lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Evidence preview" aria-labelledby="lightbox-caption" tabindex="-1" inert>
   <button class="media-lightbox-close" type="button" aria-label="Close enlarged evidence">×</button>
+  <button class="media-lightbox-nav prev" type="button" aria-label="Previous evidence">←</button>
+  <button class="media-lightbox-nav next" type="button" aria-label="Next evidence">→</button>
   <figure>
     <img alt="" loading="lazy" decoding="async" />
     <figcaption id="lightbox-caption"></figcaption>
@@ -689,10 +755,23 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       <a href="#stack"><span class="s">/</span>stack</a>
       <a href="#contact"><span class="s">/</span>contact</a>
     </div>
-    <div class="status"><span class="dot"></span><span>open to work</span></div>
+    <div class="nav-right">
+      <button class="kbd-hint" type="button" id="cmdk-open" aria-label="Open command palette">⌘K</button>
+      <div class="status"><span class="dot"></span><span>open to work</span><span class="clock" aria-label="Local time in Istanbul"></span></div>
+    </div>
     <button class="hamburger" id="hamburger" aria-controls="drawer" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
   </div>
+  <div class="nav-progress" aria-hidden="true"></div>
 </nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sheet-backdrop" id="sheet-backdrop" aria-hidden="true"></div>
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cmdk-box">
+    <div class="cmdk-in"><span>›</span><input id="cmdk-input" type="text" placeholder="Jump to a project, section or action…" autocomplete="off" spellcheck="false" aria-controls="cmdk-list" /></div>
+    <ul class="cmdk-list" id="cmdk-list" role="listbox"></ul>
+    <div class="cmdk-foot"><span>↑↓ navigate</span><span>↵ open</span><span>esc close</span></div>
+  </div>
+</div>
 <div class="drawer-overlay" id="drawerOverlay" aria-hidden="true"></div>
 <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Mobile navigation" aria-hidden="true" inert>
   <a href="#about">/ about</a>
@@ -1281,6 +1360,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       </article>
     </div>
     <aside id="project-inspector" aria-live="polite" aria-label="Selected project details">
+      <div class="pi-sheet-bar"><span class="grip" aria-hidden="true"></span><button type="button" id="sheet-close">close ×</button></div>
       <div class="pi-topline">
         <div class="pi-mode">project preview · click to pin</div>
       </div>
@@ -1305,7 +1385,10 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <div class="pi-cell"><span class="pi-label"></span><strong class="pi-value"></strong></div>
       </div>
       <p class="pi-note" hidden></p>
-      <a class="pi-repo" href="#" target="_blank" rel="noopener" hidden>view code on GitHub <span aria-hidden="true">↗</span></a>
+      <div class="pi-actions">
+        <a class="pi-repo" href="#" target="_blank" rel="noopener" hidden>view code on GitHub <span aria-hidden="true">↗</span></a>
+        <button class="pi-share" type="button">copy link</button>
+      </div>
     </aside>
     </div>
   </div>
@@ -1362,11 +1445,14 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         </a>
 
         <div class="socials">
-          <a class="soc" href="mailto:yamanogludaniel@gmail.com">
-            <span class="ic">@</span>
-            <div><div class="nm">Email</div><div class="hn">yamanogludaniel@gmail.com</div></div>
-            <span class="ar">→</span>
-          </a>
+          <div class="soc-wrap">
+            <a class="soc" href="mailto:yamanogludaniel@gmail.com">
+              <span class="ic">@</span>
+              <div><div class="nm">Email</div><div class="hn">yamanogludaniel@gmail.com</div></div>
+              <span class="ar">→</span>
+            </a>
+            <button class="soc-copy" type="button" data-copy="yamanogludaniel@gmail.com" aria-label="Copy email address">copy</button>
+          </div>
           <a class="soc" href="https://github.com/DanielYamanoglu" target="_blank" rel="noopener">
             <span class="ic">gh</span>
             <div><div class="nm">GitHub</div><div class="hn">github.com/DanielYamanoglu</div></div>
@@ -1671,8 +1757,10 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         return;
       }
       if(e.key==='Tab'){
+        const f=[lightboxClose,...lightbox.querySelectorAll('.media-lightbox-nav')].filter(b=>b.offsetParent);
         e.preventDefault();
-        lightboxClose.focus({preventScroll:true});
+        const i=f.indexOf(document.activeElement);
+        f[(i+(e.shiftKey?-1:1)+f.length)%f.length].focus({preventScroll:true});
         return;
       }
     }
@@ -1697,18 +1785,73 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
     });
   });
   document.querySelectorAll('[data-case]').forEach(link=>{
-    link.addEventListener('click',e=>{
-      const card=cards.find(c=>c.dataset.project===link.dataset.case);
-      if(!card)return;
-      e.preventDefault();
-      document.querySelectorAll('.pfilters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter==='all')));
-      cards.forEach(c=>c.hidden=false);
-      balanceGrid();
-      pinned=true;show(card);
-      card.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
-    });
+    link.addEventListener('click',e=>{if(openProject(link.dataset.case))e.preventDefault()});
   });
+  /* ---- mobile bottom sheet ---- */
+  const sheetMq=matchMedia('(max-width:980px)');
+  const backdrop=document.getElementById('sheet-backdrop');
+  // The sheet sits inside .wrap's stacking context (z-index:5), so the backdrop must share it.
+  inspector.parentNode.insertBefore(backdrop,inspector);
+  function openSheet(){
+    if(!sheetMq.matches)return;
+    inspector.classList.add('sheet');inspector.scrollTop=0;
+    backdrop.classList.add('on');document.body.classList.add('sheet-open');
+  }
+  function closeSheet(){
+    inspector.classList.remove('sheet');backdrop.classList.remove('on');document.body.classList.remove('sheet-open');
+  }
+  backdrop.addEventListener('click',closeSheet);
+  document.getElementById('sheet-close').addEventListener('click',closeSheet);
+  sheetMq.addEventListener('change',e=>{if(!e.matches)closeSheet()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&inspector.classList.contains('sheet'))closeSheet()});
+
+  /* ---- shareable project links (#lifeos) ---- */
+  function setHash(){
+    if(pinned&&active)history.replaceState(null,'','#'+active.dataset.project);
+  }
+  function openProject(id,{scroll=true}={}){
+    const card=cards.find(c=>c.dataset.project===id);
+    if(!card)return false;
+    document.querySelectorAll('.pfilters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter==='all')));
+    cards.forEach(c=>c.hidden=false);
+    balanceGrid();
+    pinned=true;show(card);setHash();
+    if(sheetMq.matches)openSheet();
+    else if(scroll)card.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+    return true;
+  }
+  window.portfolio={openProject,projects:()=>cards.map(c=>({id:c.dataset.project,title:c.querySelector('h3').textContent.trim()}))};
+  cards.forEach(card=>card.addEventListener('click',()=>{setHash();if(pinned)openSheet()}));
+  inspector.querySelector('.pi-share').addEventListener('click',()=>{
+    if(!active)return;
+    const url=location.origin+location.pathname+'#'+active.dataset.project;
+    window.copyText(url,'Project link copied');
+  });
+
+  /* ---- lightbox prev/next over the selected project's evidence ---- */
+  const navPrev=lightbox.querySelector('.media-lightbox-nav.prev'),navNext=lightbox.querySelector('.media-lightbox-nav.next');
+  function stepLightbox(dir){
+    const figs=[...mediaGrid.querySelectorAll('figure')].filter(f=>!f.hidden&&f.querySelector('img').getAttribute('src'));
+    if(figs.length<2)return;
+    const cur=figs.findIndex(f=>(f.querySelector('img').currentSrc||f.querySelector('img').src)===lightboxImage.src);
+    const next=figs[(cur+dir+figs.length)%figs.length];
+    openLightbox(next,true);
+  }
+  navPrev.addEventListener('click',e=>{e.stopPropagation();stepLightbox(-1)});
+  navNext.addEventListener('click',e=>{e.stopPropagation();stepLightbox(1)});
+  addEventListener('keydown',e=>{
+    if(!lightbox.classList.contains('pinned'))return;
+    if(e.key==='ArrowRight'){e.preventDefault();stepLightbox(1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();stepLightbox(-1)}
+  });
+  new MutationObserver(()=>{
+    const n=[...mediaGrid.querySelectorAll('figure')].filter(f=>!f.hidden).length;
+    lightbox.classList.toggle('has-nav',n>1);
+  }).observe(lightbox,{attributes:true,attributeFilter:['class']});
+
   show(cards[0]);
+  const initial=location.hash.slice(1);
+  if(initial&&cards.some(c=>c.dataset.project===initial))requestAnimationFrame(()=>openProject(initial));
 })();
 
 /* ============ magnetic buttons ============ */
@@ -1739,6 +1882,95 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
   const io=new IntersectionObserver((es)=>es.forEach(e=>{
     if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:0,rootMargin:'0px 0px -8% 0px'});
   elements.forEach(el=>io.observe(el));
+})();
+
+/* ============ copy + toast ============ */
+(function(){
+  const toast=document.getElementById('toast');let t=null;
+  window.showToast=msg=>{toast.textContent=msg;toast.classList.add('on');clearTimeout(t);t=setTimeout(()=>toast.classList.remove('on'),1800)};
+  window.copyText=async(text,msg)=>{
+    try{await navigator.clipboard.writeText(text)}
+    catch{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove()}
+    window.showToast(msg||'Copied');
+  };
+  document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();window.copyText(b.dataset.copy,'Email copied');
+  }));
+})();
+
+/* ============ nav: scroll progress + active section + Istanbul clock ============ */
+(function(){
+  const bar=document.querySelector('.nav-progress');
+  let ticking=false;
+  function update(){
+    const max=document.documentElement.scrollHeight-innerHeight;
+    bar.style.transform=`scaleX(${max>0?Math.min(scrollY/max,1):0})`;ticking=false;
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+  addEventListener('resize',update);update();
+
+  const links=[...document.querySelectorAll('.links a, .drawer a')];
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));
+  }),{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(sec=>io.observe(sec));
+
+  const clock=document.querySelector('.status .clock');
+  const fmt=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'});
+  const tick=()=>{clock.textContent=' · IST '+fmt.format(new Date())};
+  tick();setInterval(tick,30000);
+})();
+
+/* ============ command palette (⌘K / Ctrl+K) ============ */
+(function(){
+  const root=document.getElementById('cmdk'),input=document.getElementById('cmdk-input'),list=document.getElementById('cmdk-list');
+  const go=id=>()=>document.getElementById(id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  const base=[
+    {t:'About',g:'section',run:go('about')},
+    {t:'Experience',g:'section',run:go('experience')},
+    {t:'Selected work',g:'section',run:go('projects')},
+    {t:'Core stack',g:'section',run:go('stack')},
+    {t:'Contact',g:'section',run:go('contact')},
+    {t:'Download résumé',g:'action',run:()=>{const a=document.createElement('a');a.href='Daniel_Yamanoglu_CV.pdf';a.download='';a.click()}},
+    {t:'Copy email address',g:'action',run:()=>window.copyText('yamanogludaniel@gmail.com','Email copied')},
+    {t:'Send an email',g:'action',run:()=>{location.href='mailto:yamanogludaniel@gmail.com'}},
+    {t:'GitHub profile',g:'link',run:()=>open('https://github.com/DanielYamanoglu','_blank','noopener')},
+    {t:'LinkedIn profile',g:'link',run:()=>open('https://www.linkedin.com/in/daniel-yamano%C4%9Flu-75516a203/','_blank','noopener')}
+  ];
+  let items=[],sel=0,lastFocus=null;
+  function all(){
+    const projects=(window.portfolio?window.portfolio.projects():[]).map(p=>({t:p.title,g:'project',run:()=>window.portfolio.openProject(p.id)}));
+    return [...projects,...base];
+  }
+  function render(){
+    const q=input.value.trim().toLowerCase();
+    items=all().filter(i=>!q||i.t.toLowerCase().includes(q)||i.g.includes(q));
+    sel=Math.min(sel,Math.max(items.length-1,0));
+    list.replaceChildren(...items.map((it,i)=>{
+      const li=document.createElement('li');li.setAttribute('role','option');li.setAttribute('aria-selected',String(i===sel));
+      li.textContent=it.t;const g=document.createElement('span');g.className='g';g.textContent=it.g;li.appendChild(g);
+      li.addEventListener('mousemove',()=>{if(sel!==i){sel=i;mark()}});
+      li.addEventListener('click',()=>run(i));
+      return li;
+    }));
+    if(!items.length){const li=document.createElement('li');li.className='cmdk-empty';li.textContent='no matches';list.appendChild(li)}
+  }
+  function mark(){[...list.children].forEach((li,i)=>li.setAttribute('aria-selected',String(i===sel)));list.children[sel]?.scrollIntoView({block:'nearest'})}
+  function openP(){lastFocus=document.activeElement;root.classList.add('open');input.value='';sel=0;render();input.focus()}
+  function closeP(){root.classList.remove('open');lastFocus?.focus?.({preventScroll:true})}
+  function run(i){const it=items[i];if(!it)return;closeP();it.run()}
+  document.getElementById('cmdk-open').addEventListener('click',openP);
+  root.addEventListener('click',e=>{if(e.target===root)closeP()});
+  input.addEventListener('input',()=>{sel=0;render()});
+  addEventListener('keydown',e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();root.classList.contains('open')?closeP():openP();return}
+    if(!root.classList.contains('open'))return;
+    if(e.key==='Escape'){e.preventDefault();closeP()}
+    else if(e.key==='ArrowDown'){e.preventDefault();sel=(sel+1)%Math.max(items.length,1);mark()}
+    else if(e.key==='ArrowUp'){e.preventDefault();sel=(sel-1+items.length)%Math.max(items.length,1);mark()}
+    else if(e.key==='Enter'){e.preventDefault();run(sel)}
+  });
 })();
 
 /* ============ hero rotating phrase ============ */
