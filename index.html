@@ -655,14 +655,14 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 }
 /* reduced motion: keep only small, slow, non-moving ambient animations (overrides the global kill switch above) */
 @media(prefers-reduced-motion:reduce){
-  .pcard-viz [stroke-dasharray]{animation-duration:5s!important}
-  .pcard-viz circle,.pcard-viz rect[width="8"],.pcard-viz polygon{animation-duration:6.5s!important}
-  .proj-grid.in .pcard-viz .draw,.pcard:hover .pcard-viz .draw{animation-duration:1.8s!important}
-  .hi .caret{animation-duration:1.4s!important}
-  .hstats div::after{animation-duration:10s!important}
+  .pcard-viz [stroke-dasharray]{animation-duration:2.4s!important}
+  .pcard-viz circle,.pcard-viz rect[width="8"],.pcard-viz polygon{animation-duration:3.2s!important}
+  .proj-grid.in .pcard-viz .draw,.pcard:hover .pcard-viz .draw{animation-duration:1.4s!important}
+  .hi .caret{animation-duration:1s!important}
+  .hstats div::after{animation-duration:6s!important}
   #project-inspector.swap .pi-kicker,#project-inspector.swap .pi-title,#project-inspector.swap .pi-summary,
   #project-inspector.swap .pi-contribution,#project-inspector.swap .pi-points,#project-inspector.swap .pi-grid,
-  #project-inspector.swap .pi-media-grid{animation-duration:.45s!important}
+  #project-inspector.swap .pi-media-grid{animation-duration:.38s!important}
 }
 </style>
 <noscript><style>.rv,.rv.in{opacity:1!important;transform:none!important;filter:none!important}.pcard,.stack-card,.soc,.tl-item,.edu-card{animation:none!important}</style></noscript>
@@ -1800,9 +1800,9 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 (function(){
   const cv=document.getElementById('neural'),x=cv.getContext('2d');
   const cc=document.getElementById('cursor-layer'),cx=cc.getContext('2d');
-  // Reduced motion: keep a slow, low-contrast ambient drift (no bursts, no cursor layer).
+  // Reduced motion: the ambient network still runs; only the custom cursor layer is off.
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const SPEED=reducedMotion?.35:1;
+  const SPEED=1;
   if(reducedMotion)cc.style.display='none';
   let W,H,nodes=[],edges=[],signals=[],attentions=[],mouse={x:-9999,y:-9999},running=true,raf=null,lastFire=0,resetTimer=0;
   const isTouch=matchMedia('(hover:none)').matches;
@@ -1816,7 +1816,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       const z=.45+Math.random()*.55; // depth: near nodes are larger, brighter and faster
       nodes.push({
         x:Math.random()*W,y:Math.random()*H,z,
-        vx:(Math.random()-.5)*.16*z,vy:(Math.random()-.5)*.16*z,
+        vx:(Math.random()-.5)*.125*z,vy:(Math.random()-.5)*.125*z,
         r:(Math.random()*1.1+.9)*(.7+z*.6),
         fire:0,cooldown:0,phase:Math.random()*6.28
       });
@@ -1852,7 +1852,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     const n=nodes[idx];if(!n||n.cooldown>0)return;
     n.fire=1;n.cooldown=REFRACTORY;
     // self-attention burst: short-lived lines to ALL nodes, weight = inverse distance
-    if(!reducedMotion&&attentions.length<MAX_ATTENTIONS){
+    if(attentions.length<MAX_ATTENTIONS){
       attentions.push({src:idx,t:1});
     }
     // send signals to connected neighbors + Hebbian strengthening
@@ -1885,7 +1885,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
     // auto-fire random nodes periodically
     if(!lastFire)lastFire=ts;
-    if(ts-lastFire>(reducedMotion?5200:1500)&&running){
+    if(ts-lastFire>2200&&running){
       fireNode(Math.floor(Math.random()*nodes.length));
       lastFire=ts;
     }
