@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" modified="2026-08-24T20:45:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="lifeos-flow" name="Life OS Flow">
+    <mxGraphModel dx="1200" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="bg" value="Life OS · Agentic Knowledge System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08080a;strokeColor=#28313a;fontColor=#ededed;fontSize=24;fontStyle=1;align=left;verticalAlign=top;spacingLeft=28;spacingTop=24;" vertex="1" parent="1">
+          <mxGeometry x="24" y="24" width="1152" height="712" as="geometry"/>
+        </mxCell>
+        <mxCell id="source" value="&lt;b&gt;Sources&lt;/b&gt;&lt;br&gt;Telegram&lt;br&gt;Notes / tasks&lt;br&gt;&lt;font color='#7a7a85'&gt;capture surface&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#151b20;strokeColor=#40504a;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="56" y="208" width="186" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="capture" value="&lt;b&gt;Capture agent&lt;/b&gt;&lt;br&gt;parse · clean · tag&lt;br&gt;extract entities&lt;br&gt;&lt;font color='#7a7a85'&gt;event normalization&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#151b20;strokeColor=#40504a;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="284" y="208" width="182" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="router" value="&lt;b&gt;Agent router&lt;/b&gt;&lt;br&gt;classify intent&lt;br&gt;choose next tool&lt;br&gt;&lt;font color='#5fcf80'&gt;stateful orchestration&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#142018;strokeColor=#5fcf80;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="508" y="208" width="182" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="neo4j" value="&lt;b&gt;Neo4j graph&lt;/b&gt;&lt;br&gt;entities · relations&lt;br&gt;&lt;font color='#7a7a85'&gt;long-term structure&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#151b20;strokeColor=#40504a;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="744" y="146" width="194" height="112" as="geometry"/>
+        </mxCell>
+        <mxCell id="qdrant" value="&lt;b&gt;Qdrant index&lt;/b&gt;&lt;br&gt;semantic vectors&lt;br&gt;&lt;font color='#7a7a85'&gt;similarity retrieval&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#151b20;strokeColor=#40504a;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="744" y="326" width="194" height="112" as="geometry"/>
+        </mxCell>
+        <mxCell id="planner" value="&lt;b&gt;Query planner&lt;/b&gt;&lt;br&gt;retrieve · rerank&lt;br&gt;build context&lt;br&gt;&lt;font color='#5fcf80'&gt;answer preparation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#142018;strokeColor=#5fcf80;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="988" y="208" width="184" height="128" as="geometry"/>
+        </mxCell>
+        <mxCell id="tools" value="&lt;b&gt;Tools + response&lt;/b&gt;&lt;br&gt;Telegram reply&lt;br&gt;task / research action&lt;br&gt;&lt;font color='#7a7a85'&gt;closed feedback loop&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#151b20;strokeColor=#40504a;fontColor=#ededed;fontSize=16;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="988" y="442" width="184" height="124" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="raw event" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="source" target="capture">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="normalized data" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="capture" target="router">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="graph facts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="router" target="neo4j">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="embeddings" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="router" target="qdrant">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="context" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="neo4j" target="planner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="reranked context" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="qdrant" target="planner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="answer / action" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#5fcf80;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="planner" target="tools">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="user query / task" style="edgeStyle=orthogonalEdgeStyle;rounded=1;dashed=1;html=1;strokeColor=#7adb95;fontColor=#7a7a85;endArrow=classic;" edge="1" parent="1" source="source" target="planner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

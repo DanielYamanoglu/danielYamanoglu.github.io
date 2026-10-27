@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Life OS agentic knowledge system flow</title>
+  <desc id="desc">A flow from Telegram and notes through capture, classification, agent routing, Neo4j and Qdrant memory, retrieval, and tool-backed responses.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11151a"/>
+      <stop offset="1" stop-color="#08080a"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5fcf80" stop-opacity=".2"/>
+      <stop offset=".5" stop-color="#5fcf80"/>
+      <stop offset="1" stop-color="#5fcf80" stop-opacity=".2"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5fcf80"/>
+    </marker>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#5fcf80" stroke-opacity=".055" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="760" rx="28" fill="url(#bg)"/>
+  <rect x="24" y="24" width="1152" height="712" rx="20" fill="url(#grid)" opacity=".55"/>
+  <rect x="24" y="24" width="1152" height="712" rx="20" fill="none" stroke="#28313a"/>
+
+  <text x="60" y="74" fill="#5fcf80" font-family="ui-monospace,monospace" font-size="14" letter-spacing="2.4">LIFE OS · AGENTIC KNOWLEDGE SYSTEM</text>
+  <text x="60" y="111" fill="#ededed" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="700">capture → structure → remember → act</text>
+  <text x="60" y="140" fill="#7a7a85" font-family="Inter,Arial,sans-serif" font-size="15">A graph-backed memory loop for personal knowledge, tasks, and research.</text>
+
+  <g fill="none" stroke="#5fcf80" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)">
+    <path d="M242 274 H284"/>
+    <path d="M466 274 H508"/>
+    <path d="M690 248 C716 230 720 202 744 202"/>
+    <path d="M690 300 C716 318 720 382 744 382"/>
+    <path d="M938 202 C964 202 966 254 988 254"/>
+    <path d="M938 382 C964 382 966 294 988 294"/>
+    <path d="M1080 336 V442"/>
+    <path d="M988 504 H890 C856 504 846 458 846 430"/>
+  </g>
+  <path d="M154 336 C154 418 250 468 350 468 H988" fill="none" stroke="#7adb95" stroke-opacity=".42" stroke-width="1.5" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+
+  <g font-family="ui-monospace,monospace" font-size="11" fill="#7a7a85">
+    <text x="250" y="258">raw event</text>
+    <text x="474" y="258">normalized data</text>
+    <text x="704" y="220">graph facts</text>
+    <text x="704" y="354">embeddings</text>
+    <text x="962" y="236">context</text>
+    <text x="1092" y="402">answer / action</text>
+    <text x="420" y="456">user query / task</text>
+  </g>
+
+  <g font-family="Inter,Arial,sans-serif">
+    <g transform="translate(56 208)">
+      <rect width="186" height="128" rx="14" fill="#151b20" stroke="#40504a"/>
+      <circle cx="28" cy="30" r="8" fill="#5fcf80" filter="url(#glow)"/>
+      <text x="48" y="36" fill="#ededed" font-size="18" font-weight="700">Sources</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">Telegram</text>
+      <text x="20" y="94" fill="#c8c8d0" font-size="14">Notes / tasks</text>
+      <text x="20" y="116" fill="#7a7a85" font-family="ui-monospace,monospace" font-size="11">capture surface</text>
+    </g>
+
+    <g transform="translate(284 208)">
+      <rect width="182" height="128" rx="14" fill="#151b20" stroke="#40504a"/>
+      <text x="20" y="34" fill="#ededed" font-size="18" font-weight="700">Capture agent</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">parse · clean · tag</text>
+      <text x="20" y="96" fill="#c8c8d0" font-size="14">extract entities</text>
+      <text x="20" y="116" fill="#7a7a85" font-family="ui-monospace,monospace" font-size="11">event normalization</text>
+    </g>
+
+    <g transform="translate(508 208)">
+      <rect width="182" height="128" rx="14" fill="#142018" stroke="#5fcf80" stroke-opacity=".65"/>
+      <text x="20" y="34" fill="#ededed" font-size="18" font-weight="700">Agent router</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">classify intent</text>
+      <text x="20" y="96" fill="#c8c8d0" font-size="14">choose next tool</text>
+      <text x="20" y="116" fill="#5fcf80" font-family="ui-monospace,monospace" font-size="11">stateful orchestration</text>
+    </g>
+
+    <g transform="translate(744 146)">
+      <rect width="194" height="112" rx="14" fill="#151b20" stroke="#40504a"/>
+      <circle cx="25" cy="29" r="7" fill="#7adb95"/>
+      <text x="42" y="35" fill="#ededed" font-size="17" font-weight="700">Neo4j graph</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">entities · relations</text>
+      <text x="20" y="94" fill="#7a7a85" font-family="ui-monospace,monospace" font-size="11">long-term structure</text>
+    </g>
+
+    <g transform="translate(744 326)">
+      <rect width="194" height="112" rx="14" fill="#151b20" stroke="#40504a"/>
+      <circle cx="25" cy="29" r="7" fill="#f0d86a"/>
+      <text x="42" y="35" fill="#ededed" font-size="17" font-weight="700">Qdrant index</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">semantic vectors</text>
+      <text x="20" y="94" fill="#7a7a85" font-family="ui-monospace,monospace" font-size="11">similarity retrieval</text>
+    </g>
+
+    <g transform="translate(988 208)">
+      <rect width="184" height="128" rx="14" fill="#142018" stroke="#5fcf80" stroke-opacity=".65"/>
+      <text x="20" y="34" fill="#ededed" font-size="18" font-weight="700">Query planner</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">retrieve · rerank</text>
+      <text x="20" y="96" fill="#c8c8d0" font-size="14">build context</text>
+      <text x="20" y="116" fill="#5fcf80" font-family="ui-monospace,monospace" font-size="11">answer preparation</text>
+    </g>
+
+    <g transform="translate(988 442)">
+      <rect width="184" height="124" rx="14" fill="#151b20" stroke="#40504a"/>
+      <text x="20" y="34" fill="#ededed" font-size="18" font-weight="700">Tools + response</text>
+      <text x="20" y="70" fill="#c8c8d0" font-size="14">Telegram reply</text>
+      <text x="20" y="96" fill="#c8c8d0" font-size="14">task / research action</text>
+      <text x="20" y="116" fill="#7a7a85" font-family="ui-monospace,monospace" font-size="11">closed feedback loop</text>
+    </g>
+  </g>
+
+  <g transform="translate(60 662)" font-family="ui-monospace,monospace" font-size="12">
+    <circle cx="7" cy="-4" r="5" fill="#5fcf80"/><text x="20" y="0" fill="#7a7a85">graph memory</text>
+    <circle cx="170" cy="-4" r="5" fill="#f0d86a"/><text x="183" y="0" fill="#7a7a85">vector memory</text>
+    <circle cx="350" cy="-4" r="5" fill="#7adb95"/><text x="363" y="0" fill="#7a7a85">agent decision</text>
+  </g>
+</svg>
