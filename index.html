@@ -109,8 +109,8 @@ body::after{
 #spotlight{position:fixed;inset:0;z-index:2;pointer-events:none;
   background:radial-gradient(480px 480px at var(--mx,50%) var(--my,50%),rgba(95,207,128,.06),transparent 70%);
   transition:background .25s ease;mix-blend-mode:screen}
-#neural{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.62}
-@media(hover:none){#neural{opacity:.34}}
+#neural{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.32}
+@media(hover:none){#neural{opacity:.18}}
 #cursor-layer{position:fixed;inset:0;z-index:101;pointer-events:none}
 /* layout */
 .wrap{position:relative;z-index:5;max-width:var(--maxw);margin:0 auto;padding:0 24px}
@@ -357,7 +357,7 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .hstats div{background:var(--surface);padding:12px 14px}
 .hstats b{display:block;font-family:var(--sans);font-size:20px;font-weight:650;color:var(--fg);letter-spacing:-.4px;line-height:1.2}
 .hstats b em{font-style:normal;color:var(--accent);font-size:.75em}
-.hstats span{display:block;font-family:var(--mono);font-size:9.5px;line-height:1.35;color:var(--dim);margin-top:3px}
+.hstats div>span{display:block;font-family:var(--mono);font-size:9.5px;line-height:1.35;color:var(--dim);margin-top:3px}
 @media(max-width:560px){.hstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tl-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;opacity:.85;transition:.16s}
 .tl-link:hover{opacity:1;gap:9px}
@@ -1800,25 +1800,22 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 (function(){
   const cv=document.getElementById('neural'),x=cv.getContext('2d');
   const cc=document.getElementById('cursor-layer'),cx=cc.getContext('2d');
-  // Reduced motion: the ambient network still runs; only the custom cursor layer is off.
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const SPEED=1;
   if(reducedMotion)cc.style.display='none';
   let W,H,nodes=[],edges=[],signals=[],attentions=[],mouse={x:-9999,y:-9999},running=true,raf=null,lastFire=0,resetTimer=0;
   const isTouch=matchMedia('(hover:none)').matches;
   if(!isTouch&&!reducedMotion)document.body.classList.add('custom-cursor-active');
-  const MAX_NODES=isTouch?30:64,EDGE_DIST=isTouch?150:200,REFRACTORY=1400,SIGNAL_SPEED=.01,MAX_SIGNALS=isTouch?14:28,MAX_ATTENTIONS=isTouch?5:10,ATTN_DECAY=.022,HEBB_GAIN=.01,HEBB_DECAY=.0004,HEBB_MAX=.85,RESET_INTERVAL=55000,REVEAL_RADIUS=220,REVEAL_SOFT=380,AMBIENT=reducedMotion?.85:.5;
+  const MAX_NODES=isTouch?25:50,EDGE_DIST=isTouch?110:130,REFRACTORY=1400,SIGNAL_SPEED=.01,MAX_SIGNALS=isTouch?14:28,MAX_ATTENTIONS=isTouch?5:10,ATTN_DECAY=.022,HEBB_GAIN=.01,HEBB_DECAY=.0004,HEBB_MAX=.85,RESET_INTERVAL=55000,REVEAL_RADIUS=220,REVEAL_SOFT=380;
 
   function buildGraph(){
-    const n=Math.min(MAX_NODES,Math.floor(W*H/(isTouch?32000:21000)));
+    const n=Math.min(MAX_NODES,Math.floor(W*H/(isTouch?45000:28000)));
     nodes=[];
     for(let i=0;i<n;i++){
-      const z=.45+Math.random()*.55; // depth: near nodes are larger, brighter and faster
       nodes.push({
-        x:Math.random()*W,y:Math.random()*H,z,
-        vx:(Math.random()-.5)*.125*z,vy:(Math.random()-.5)*.125*z,
-        r:(Math.random()*1.1+.9)*(.7+z*.6),
-        fire:0,cooldown:0,phase:Math.random()*6.28
+        x:Math.random()*W,y:Math.random()*H,
+        vx:(Math.random()-.5)*.09,vy:(Math.random()-.5)*.09,
+        r:Math.random()*1.1+.5,
+        fire:0,cooldown:0
       });
     }
     edges=[];
@@ -1827,25 +1824,15 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       if(d<EDGE_DIST)edges.push({a:i,b:j,d:d,w:0});
     }
   }
-  // Mobile browsers fire resize when the URL bar hides/shows; only rebuild the graph on a real
-  // size change, and drop in-flight signals/attentions that point at the old graph's nodes.
-  function rs(){
-    const nw=innerWidth,nh=innerHeight,rebuild=!nodes.length||nw!==W||Math.abs(nh-H)>120;
-    const dpr=Math.min(devicePixelRatio||1,2);
-    W=nw;H=nh;
-    for(const [c,ctx] of [[cv,x],[cc,cx]]){c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
-    if(rebuild){signals=[];attentions=[];buildGraph()}
-  }
-  let rsTimer=null;
-  addEventListener('resize',()=>{clearTimeout(rsTimer);rsTimer=setTimeout(rs,150)});rs();
+  function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;cc.width=W;cc.height=H;signals=[];attentions=[];buildGraph()}
+  addEventListener('resize',rs);rs();
   addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
-  // Always-on ambient layer; the cursor brightens the network around it.
   function nodeReveal(n){
     if(isTouch)return 1;
     const d=Math.hypot(n.x-mouse.x,n.y-mouse.y);
     if(d<REVEAL_RADIUS)return 1;
-    if(d>REVEAL_SOFT)return AMBIENT;
-    return Math.max(AMBIENT,1-(d-REVEAL_RADIUS)/(REVEAL_SOFT-REVEAL_RADIUS));
+    if(d>REVEAL_SOFT)return 0;
+    return 1-(d-REVEAL_RADIUS)/(REVEAL_SOFT-REVEAL_RADIUS);
   }
 
   function fireNode(idx){
@@ -1874,7 +1861,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
     // move nodes, mouse repulsion
     for(const n of nodes){
-      n.x+=n.vx*SPEED;n.y+=n.vy*SPEED;
+      n.x+=n.vx;n.y+=n.vy;
       if(n.x<0||n.x>W)n.vx*=-1;
       if(n.y<0||n.y>H)n.vy*=-1;
       const dx=n.x-mouse.x,dy=n.y-mouse.y,d=Math.hypot(dx,dy);
@@ -1937,10 +1924,10 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       const reveal=Math.max(ra,rb);
       if(reveal<.02&&a.fire<.05&&b.fire<.05)continue;
       const active=a.fire>.1||b.fire>.1;
-      const baseO=Math.max(0,1-e.d/EDGE_DIST)*.32;
+      const baseO=(1-e.d/EDGE_DIST)*.18;
       const hebbO=e.w*.5;
       const fireO=active?Math.max(a.fire,b.fire)*.5:0;
-      const o=(baseO+hebbO+fireO)*Math.max(reveal,Math.max(a.fire,b.fire)*.6)*(.5+(a.z+b.z)*.25);
+      const o=(baseO+hebbO+fireO)*Math.max(reveal,Math.max(a.fire,b.fire)*.6);
       if(o<.008)continue;
       x.strokeStyle='rgba(95,207,128,'+Math.min(o,.7)+')';
       x.lineWidth=active?1:(.4+e.w*1.4);
@@ -1949,7 +1936,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
     // update + draw signals — reveal-gated but fire state keeps them alive
     for(let i=signals.length-1;i>=0;i--){
-      const s=signals[i];s.t+=SIGNAL_SPEED*SPEED;
+      const s=signals[i];s.t+=SIGNAL_SPEED;
       if(s.t>=1){fireNode(s.to);signals.splice(i,1);continue}
       const a=nodes[s.edge.a],b=nodes[s.edge.b];
       const sx=s.from===s.edge.a?a.x+(b.x-a.x)*s.t:a.x+(b.x-a.x)*(1-s.t);
@@ -1962,17 +1949,11 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       x.beginPath();x.arc(sx,sy,5,0,7);x.fill();
     }
 
-    // draw nodes — reveal-gated, fire adds temporary visibility, depth scales brightness
-    const breath=(ts||0)*.0016*SPEED;
+    // draw nodes — reveal-gated, fire adds temporary visibility
     for(const n of nodes){
       const f=n.fire;
       const reveal=nodeReveal(n);
-      const vis=Math.max(reveal,f*.7)*(.55+n.z*.45);
-      if(n.z>.8&&vis>.05){
-        const b=.5+Math.sin(breath+n.phase)*.5;
-        x.fillStyle='rgba(95,207,128,'+(.07*b*vis)+')';
-        x.beginPath();x.arc(n.x,n.y,n.r+5+b*3,0,7);x.fill();
-      }
+      const vis=Math.max(reveal,f*.7);
       if(vis<.02)continue;
       if(f>.05){
         x.fillStyle='rgba(95,207,128,'+(f*.15*vis)+')';
@@ -1986,8 +1967,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   }
   // cursor drawing on separate high-z-index canvas
   function drawCursor(ts){
-    if(isTouch)return;
-    if(!running||mouse.x<-1000){requestAnimationFrame(drawCursor);return}
+    if(isTouch||mouse.x<-1000){requestAnimationFrame(drawCursor);return}
     cx.clearRect(0,0,W,H);
     const pulse=.6+Math.sin(ts*.005)*.2;
     // find 3 nearest nodes
@@ -2023,12 +2003,12 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     cx.beginPath();cx.arc(mouse.x,mouse.y,.8,0,7);cx.fill();
     requestAnimationFrame(drawCursor);
   }
-  if(!reducedMotion)requestAnimationFrame(drawCursor);
-  raf=requestAnimationFrame(step);
+  if(!reducedMotion)drawCursor();
+  step();
 
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden){running=false;if(raf){cancelAnimationFrame(raf);raf=null}}
-    else if(!running){running=true;lastFire=0;raf=requestAnimationFrame(step)}
+    else if(!running){running=true;step()}
   });
 })();
 
