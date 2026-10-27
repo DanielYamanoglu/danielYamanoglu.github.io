@@ -1710,12 +1710,13 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 (function(){
   const cv=document.getElementById('neural'),x=cv.getContext('2d');
   const cc=document.getElementById('cursor-layer'),cx=cc.getContext('2d');
+  // Reduced motion: draw the network once as a still image instead of hiding it.
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reducedMotion){cv.style.display='none';cc.style.display='none';return}
+  if(reducedMotion)cc.style.display='none';
   let W,H,nodes=[],edges=[],signals=[],attentions=[],mouse={x:-9999,y:-9999},running=true,raf=null,lastFire=0,resetTimer=0;
   const isTouch=matchMedia('(hover:none)').matches;
-  if(!isTouch)document.body.classList.add('custom-cursor-active');
-  const MAX_NODES=isTouch?30:64,EDGE_DIST=isTouch?150:200,REFRACTORY=1400,SIGNAL_SPEED=.01,MAX_SIGNALS=isTouch?14:28,MAX_ATTENTIONS=isTouch?5:10,ATTN_DECAY=.022,HEBB_GAIN=.01,HEBB_DECAY=.0004,HEBB_MAX=.85,RESET_INTERVAL=55000,REVEAL_RADIUS=220,REVEAL_SOFT=380,AMBIENT=.5;
+  if(!isTouch&&!reducedMotion)document.body.classList.add('custom-cursor-active');
+  const MAX_NODES=isTouch?30:64,EDGE_DIST=isTouch?150:200,REFRACTORY=1400,SIGNAL_SPEED=.01,MAX_SIGNALS=isTouch?14:28,MAX_ATTENTIONS=isTouch?5:10,ATTN_DECAY=.022,HEBB_GAIN=.01,HEBB_DECAY=.0004,HEBB_MAX=.85,RESET_INTERVAL=55000,REVEAL_RADIUS=220,REVEAL_SOFT=380,AMBIENT=reducedMotion?.85:.5;
 
   function buildGraph(){
     const n=Math.min(MAX_NODES,Math.floor(W*H/(isTouch?32000:21000)));
@@ -1738,8 +1739,11 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   // size change, and drop in-flight signals/attentions that point at the old graph's nodes.
   function rs(){
     const nw=innerWidth,nh=innerHeight,rebuild=!nodes.length||nw!==W||Math.abs(nh-H)>120;
-    W=cv.width=nw;H=cv.height=nh;cc.width=W;cc.height=H;
+    const dpr=Math.min(devicePixelRatio||1,2);
+    W=nw;H=nh;
+    for(const [c,ctx] of [[cv,x],[cc,cx]]){c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
     if(rebuild){signals=[];attentions=[];buildGraph()}
+    if(reducedMotion)step(0);
   }
   let rsTimer=null;
   addEventListener('resize',()=>{clearTimeout(rsTimer);rsTimer=setTimeout(rs,150)});rs();
@@ -1881,7 +1885,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       x.beginPath();x.arc(n.x,n.y,n.r+f*1.5,0,7);x.fill();
     }
 
-    raf=requestAnimationFrame(step);
+    if(!reducedMotion)raf=requestAnimationFrame(step);
   }
   // cursor drawing on separate high-z-index canvas
   function drawCursor(ts){
@@ -1922,6 +1926,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     cx.beginPath();cx.arc(mouse.x,mouse.y,.8,0,7);cx.fill();
     requestAnimationFrame(drawCursor);
   }
+  if(reducedMotion)return;
   requestAnimationFrame(drawCursor);
   raf=requestAnimationFrame(step);
 
