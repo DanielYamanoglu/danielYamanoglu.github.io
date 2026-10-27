@@ -109,8 +109,8 @@ body::after{
 #spotlight{position:fixed;inset:0;z-index:2;pointer-events:none;
   background:radial-gradient(480px 480px at var(--mx,50%) var(--my,50%),rgba(95,207,128,.06),transparent 70%);
   transition:background .25s ease;mix-blend-mode:screen}
-#neural{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.32}
-@media(hover:none){#neural{opacity:.18}}
+#neural{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.62}
+@media(hover:none){#neural{opacity:.34}}
 #cursor-layer{position:fixed;inset:0;z-index:101;pointer-events:none}
 /* layout */
 .wrap{position:relative;z-index:5;max-width:var(--maxw);margin:0 auto;padding:0 24px}
@@ -352,6 +352,7 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .pfilters button:hover{color:var(--fg-2);border-color:var(--border-2)}
 .pfilters button[aria-pressed="true"]{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
 .pcard[hidden]{display:none}
+@media(min-width:721px){.pcard.span-row{grid-column:1/-1;min-height:0}.pcard.span-row .pcard-viz{height:190px}}
 .hstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:34px;max-width:560px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--border)}
 .hstats div{background:var(--surface);padding:12px 14px}
 .hstats b{display:block;font-family:var(--sans);font-size:20px;font-weight:650;color:var(--fg);letter-spacing:-.4px;line-height:1.2}
@@ -1642,11 +1643,18 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       show(active||cards[0]);
     }
   });
+  function balanceGrid(){
+    const visible=cards.filter(c=>!c.hidden);
+    cards.forEach(c=>c.classList.remove('span-row'));
+    if(visible.length%2)visible[visible.length-1].classList.add('span-row');
+  }
+  balanceGrid();
   document.querySelectorAll('.pfilters button').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const f=btn.dataset.filter;
       document.querySelectorAll('.pfilters button').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
       cards.forEach(card=>{card.hidden=!(f==='all'||card.dataset.cat.split(' ').includes(f))});
+      balanceGrid();
       if(active&&active.hidden){pinned=false;show(cards.find(c=>!c.hidden))}
     });
   });
@@ -1657,6 +1665,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       e.preventDefault();
       document.querySelectorAll('.pfilters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter==='all')));
       cards.forEach(c=>c.hidden=false);
+      balanceGrid();
       pinned=true;show(card);
       card.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
     });
@@ -1706,16 +1715,16 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   let W,H,nodes=[],edges=[],signals=[],attentions=[],mouse={x:-9999,y:-9999},running=true,raf=null,lastFire=0,resetTimer=0;
   const isTouch=matchMedia('(hover:none)').matches;
   if(!isTouch)document.body.classList.add('custom-cursor-active');
-  const MAX_NODES=isTouch?25:50,EDGE_DIST=isTouch?110:130,REFRACTORY=1400,SIGNAL_SPEED=.01,MAX_SIGNALS=isTouch?14:28,MAX_ATTENTIONS=isTouch?5:10,ATTN_DECAY=.022,HEBB_GAIN=.01,HEBB_DECAY=.0004,HEBB_MAX=.85,RESET_INTERVAL=55000,REVEAL_RADIUS=220,REVEAL_SOFT=380;
+  const MAX_NODES=isTouch?30:64,EDGE_DIST=isTouch?150:200,REFRACTORY=1400,SIGNAL_SPEED=.01,MAX_SIGNALS=isTouch?14:28,MAX_ATTENTIONS=isTouch?5:10,ATTN_DECAY=.022,HEBB_GAIN=.01,HEBB_DECAY=.0004,HEBB_MAX=.85,RESET_INTERVAL=55000,REVEAL_RADIUS=220,REVEAL_SOFT=380,AMBIENT=.5;
 
   function buildGraph(){
-    const n=Math.min(MAX_NODES,Math.floor(W*H/(isTouch?45000:28000)));
+    const n=Math.min(MAX_NODES,Math.floor(W*H/(isTouch?32000:21000)));
     nodes=[];
     for(let i=0;i<n;i++){
       nodes.push({
         x:Math.random()*W,y:Math.random()*H,
         vx:(Math.random()-.5)*.09,vy:(Math.random()-.5)*.09,
-        r:Math.random()*1.1+.5,
+        r:Math.random()*1.2+1,
         fire:0,cooldown:0
       });
     }
@@ -1735,12 +1744,13 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   let rsTimer=null;
   addEventListener('resize',()=>{clearTimeout(rsTimer);rsTimer=setTimeout(rs,150)});rs();
   addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+  // Always-on ambient layer; the cursor brightens the network around it.
   function nodeReveal(n){
     if(isTouch)return 1;
     const d=Math.hypot(n.x-mouse.x,n.y-mouse.y);
     if(d<REVEAL_RADIUS)return 1;
-    if(d>REVEAL_SOFT)return 0;
-    return 1-(d-REVEAL_RADIUS)/(REVEAL_SOFT-REVEAL_RADIUS);
+    if(d>REVEAL_SOFT)return AMBIENT;
+    return Math.max(AMBIENT,1-(d-REVEAL_RADIUS)/(REVEAL_SOFT-REVEAL_RADIUS));
   }
 
   function fireNode(idx){
@@ -1832,7 +1842,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       const reveal=Math.max(ra,rb);
       if(reveal<.02&&a.fire<.05&&b.fire<.05)continue;
       const active=a.fire>.1||b.fire>.1;
-      const baseO=(1-e.d/EDGE_DIST)*.18;
+      const baseO=Math.max(0,1-e.d/EDGE_DIST)*.32;
       const hebbO=e.w*.5;
       const fireO=active?Math.max(a.fire,b.fire)*.5:0;
       const o=(baseO+hebbO+fireO)*Math.max(reveal,Math.max(a.fire,b.fire)*.6);
