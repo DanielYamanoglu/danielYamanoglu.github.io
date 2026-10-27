@@ -361,6 +361,42 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 @media(max-width:560px){.hstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tl-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;opacity:.85;transition:.16s}
 .tl-link:hover{opacity:1;gap:9px}
+/* hero rotating phrase */
+.hi .rot{color:var(--fg-2)}
+.hi .caret{display:inline-block;width:7px;height:13px;margin-left:2px;vertical-align:-2px;background:var(--accent);animation:caretBlink 1s steps(1) infinite}
+@keyframes caretBlink{50%{opacity:0}}
+/* card visuals: flowing dashes, breathing points, line draw-in */
+.pcard-viz [stroke-dasharray]{animation:dashFlow 2.4s linear infinite}
+.pcard-viz circle,.pcard-viz rect[width="8"],.pcard-viz polygon{transform-box:fill-box;transform-origin:center;animation:vizBreath 3.2s ease-in-out infinite}
+.pcard-viz circle:nth-of-type(2n){animation-delay:-1.1s}
+.pcard-viz circle:nth-of-type(3n){animation-delay:-2.2s}
+.pcard-viz .draw{stroke-dasharray:1;stroke-dashoffset:1}
+.proj-grid.in .pcard-viz .draw{animation:drawIn 1.6s cubic-bezier(.4,0,.2,1) .3s forwards}
+.pcard:hover .pcard-viz .draw{animation:drawIn 1.1s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes dashFlow{to{stroke-dashoffset:-28}}
+@keyframes vizBreath{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+@keyframes drawIn{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+/* inspector: content eases in when the project changes */
+#project-inspector.swap .pi-kicker,#project-inspector.swap .pi-title,#project-inspector.swap .pi-summary,
+#project-inspector.swap .pi-contribution,#project-inspector.swap .pi-points,#project-inspector.swap .pi-grid,
+#project-inspector.swap .pi-media-grid{animation:piIn .38s cubic-bezier(.2,.8,.2,1) both}
+#project-inspector.swap .pi-title{animation-delay:.03s}
+#project-inspector.swap .pi-summary{animation-delay:.06s}
+#project-inspector.swap .pi-contribution{animation-delay:.09s}
+#project-inspector.swap .pi-points{animation-delay:.12s}
+#project-inspector.swap .pi-grid{animation-delay:.15s}
+@keyframes piIn{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:none}}
+/* hero stats: subtle sheen sweep */
+.hstats div{position:relative;overflow:hidden}
+.hstats div::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(95,207,128,.07) 50%,transparent 70%);transform:translateX(-120%);animation:sheen 6s ease-in-out infinite}
+.hstats div:nth-child(2)::after{animation-delay:.4s}
+.hstats div:nth-child(3)::after{animation-delay:.8s}
+.hstats div:nth-child(4)::after{animation-delay:1.2s}
+@keyframes sheen{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+/* timeline: line draws down when revealed */
+.timeline.rv::before{transform-origin:top;transform:scaleY(0);transition:transform 1.2s cubic-bezier(.2,.8,.2,1) .15s}
+.timeline.rv.in::before{transform:scaleY(1)}
+@media(prefers-reduced-motion:reduce){.timeline.rv::before{transform:none;transition:none}}
 #project-inspector .pi-repo{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;border:1px solid var(--border);border-radius:7px;padding:7px 11px;background:rgba(95,207,128,.045);transition:.16s}
 #project-inspector .pi-repo:hover{border-color:var(--accent);background:rgba(95,207,128,.12)}
 #project-inspector .pi-repo[hidden]{display:none}
@@ -617,6 +653,17 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
   .drawer{width:100%}
   .inspect-note{display:block;margin-top:6px;white-space:normal}
 }
+/* reduced motion: keep only small, slow, non-moving ambient animations (overrides the global kill switch above) */
+@media(prefers-reduced-motion:reduce){
+  .pcard-viz [stroke-dasharray]{animation-duration:5s!important}
+  .pcard-viz circle,.pcard-viz rect[width="8"],.pcard-viz polygon{animation-duration:6.5s!important}
+  .proj-grid.in .pcard-viz .draw,.pcard:hover .pcard-viz .draw{animation-duration:1.8s!important}
+  .hi .caret{animation-duration:1.4s!important}
+  .hstats div::after{animation-duration:10s!important}
+  #project-inspector.swap .pi-kicker,#project-inspector.swap .pi-title,#project-inspector.swap .pi-summary,
+  #project-inspector.swap .pi-contribution,#project-inspector.swap .pi-points,#project-inspector.swap .pi-grid,
+  #project-inspector.swap .pi-media-grid{animation-duration:.45s!important}
+}
 </style>
 <noscript><style>.rv,.rv.in{opacity:1!important;transform:none!important;filter:none!important}.pcard,.stack-card,.soc,.tl-item,.edu-card{animation:none!important}</style></noscript>
 </head>
@@ -670,7 +717,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <div class="av"><img src="daniel.jpg" alt="Daniel Yamanoğlu" loading="eager" width="64" height="64" /></div>
         <div class="nm">Daniel Yamanoğlu<em>AI/ML Engineer · NLP · RAG</em></div>
       </div>
-      <div class="hi rv in">— <span class="a">building</span> intelligent systems</div>
+      <div class="hi rv in">— <span class="a">building</span> <span class="rot" data-words="intelligent systems|retrieval pipelines|agent workflows|knowledge graphs|ML for industry">intelligent systems</span><span class="caret" aria-hidden="true"></span></div>
       <h1 class="name rv in">
         <span class="l">Daniel</span>
         <span class="l">Yamanoğlu</span>
@@ -689,10 +736,10 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <a href="https://github.com/DanielYamanoglu" target="_blank" rel="noopener" class="btn" data-magnetic>github <span class="ar">↗</span></a>
       </div>
       <div class="hstats rv" aria-label="Highlights">
-        <div><b>6</b><span>public case studies</span></div>
-        <div><b>103</b><span>automated tests</span></div>
-        <div><b>91.7<em>%</em></b><span>turnover model acc.</span></div>
-        <div><b>2</b><span>AI/ML internships</span></div>
+        <div><b data-count="6">6</b><span>public case studies</span></div>
+        <div><b data-count="103">103</b><span>automated tests</span></div>
+        <div><b><span data-count="91.7" data-dec="1">91.7</span><em>%</em></b><span>turnover model acc.</span></div>
+        <div><b data-count="2">2</b><span>AI/ML internships</span></div>
       </div>
     </div>
 
@@ -1586,6 +1633,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
     if(data.repo)repo.href=data.repo;
     inspector.setAttribute('aria-hidden','false');
     inspector.classList.add('show');
+    inspector.classList.remove('swap');void inspector.offsetWidth;inspector.classList.add('swap');
   }
 
   mediaGrid.querySelectorAll('figure').forEach(figure=>{
@@ -1703,6 +1751,48 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
   elements.forEach(el=>io.observe(el));
 })();
 
+/* ============ hero rotating phrase ============ */
+(function(){
+  const el=document.querySelector('.hi .rot');
+  if(!el)return;
+  const words=el.dataset.words.split('|');
+  let wi=0,ci=words[0].length,del=true;
+  function tick(){
+    const w=words[wi];
+    if(del){ci--;if(ci<=0){del=false;wi=(wi+1)%words.length}}
+    else{ci++;if(ci>=words[wi].length){del=true;el.textContent=words[wi];return setTimeout(tick,2200)}}
+    el.textContent=words[wi].slice(0,Math.max(ci,0));
+    setTimeout(tick,del?38:70);
+  }
+  setTimeout(tick,2600);
+})();
+
+/* ============ hero stats count-up ============ */
+(function(){
+  const nums=[...document.querySelectorAll('[data-count]')];
+  if(!nums.length||!('IntersectionObserver' in window))return;
+  const run=el=>{
+    const target=parseFloat(el.dataset.count),dec=+(el.dataset.dec||0),t0=performance.now(),dur=1300;
+    (function frame(now){
+      const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);
+      el.textContent=(target*e).toFixed(dec);
+      if(p<1)requestAnimationFrame(frame);
+    })(t0);
+  };
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){run(e.target);io.unobserve(e.target)}}),{threshold:.6});
+  nums.forEach(n=>io.observe(n));
+})();
+
+/* ============ card visuals: mark solid lines for draw-in ============ */
+document.querySelectorAll('.pcard-viz polyline:not([stroke-dasharray]),.pcard-viz path[stroke]:not([stroke-dasharray])').forEach(el=>{
+  if(el.closest('pattern'))return;
+  el.setAttribute('pathLength','1');el.classList.add('draw');
+});
+document.querySelectorAll('.pcard-viz g[stroke] > path').forEach(el=>{
+  if(el.closest('pattern')||el.hasAttribute('stroke-dasharray'))return;
+  el.setAttribute('pathLength','1');el.classList.add('draw');
+});
+
 /* ============ year ============ */
 document.getElementById('yr').textContent=new Date().getFullYear();
 
@@ -1710,8 +1800,9 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 (function(){
   const cv=document.getElementById('neural'),x=cv.getContext('2d');
   const cc=document.getElementById('cursor-layer'),cx=cc.getContext('2d');
-  // Reduced motion: draw the network once as a still image instead of hiding it.
+  // Reduced motion: keep a slow, low-contrast ambient drift (no bursts, no cursor layer).
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SPEED=reducedMotion?.35:1;
   if(reducedMotion)cc.style.display='none';
   let W,H,nodes=[],edges=[],signals=[],attentions=[],mouse={x:-9999,y:-9999},running=true,raf=null,lastFire=0,resetTimer=0;
   const isTouch=matchMedia('(hover:none)').matches;
@@ -1722,11 +1813,12 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     const n=Math.min(MAX_NODES,Math.floor(W*H/(isTouch?32000:21000)));
     nodes=[];
     for(let i=0;i<n;i++){
+      const z=.45+Math.random()*.55; // depth: near nodes are larger, brighter and faster
       nodes.push({
-        x:Math.random()*W,y:Math.random()*H,
-        vx:(Math.random()-.5)*.09,vy:(Math.random()-.5)*.09,
-        r:Math.random()*1.2+1,
-        fire:0,cooldown:0
+        x:Math.random()*W,y:Math.random()*H,z,
+        vx:(Math.random()-.5)*.16*z,vy:(Math.random()-.5)*.16*z,
+        r:(Math.random()*1.1+.9)*(.7+z*.6),
+        fire:0,cooldown:0,phase:Math.random()*6.28
       });
     }
     edges=[];
@@ -1743,7 +1835,6 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     W=nw;H=nh;
     for(const [c,ctx] of [[cv,x],[cc,cx]]){c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
     if(rebuild){signals=[];attentions=[];buildGraph()}
-    if(reducedMotion)step(0);
   }
   let rsTimer=null;
   addEventListener('resize',()=>{clearTimeout(rsTimer);rsTimer=setTimeout(rs,150)});rs();
@@ -1761,7 +1852,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     const n=nodes[idx];if(!n||n.cooldown>0)return;
     n.fire=1;n.cooldown=REFRACTORY;
     // self-attention burst: short-lived lines to ALL nodes, weight = inverse distance
-    if(attentions.length<MAX_ATTENTIONS){
+    if(!reducedMotion&&attentions.length<MAX_ATTENTIONS){
       attentions.push({src:idx,t:1});
     }
     // send signals to connected neighbors + Hebbian strengthening
@@ -1783,7 +1874,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
     // move nodes, mouse repulsion
     for(const n of nodes){
-      n.x+=n.vx;n.y+=n.vy;
+      n.x+=n.vx*SPEED;n.y+=n.vy*SPEED;
       if(n.x<0||n.x>W)n.vx*=-1;
       if(n.y<0||n.y>H)n.vy*=-1;
       const dx=n.x-mouse.x,dy=n.y-mouse.y,d=Math.hypot(dx,dy);
@@ -1794,7 +1885,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
     // auto-fire random nodes periodically
     if(!lastFire)lastFire=ts;
-    if(ts-lastFire>2200&&running){
+    if(ts-lastFire>(reducedMotion?5200:1500)&&running){
       fireNode(Math.floor(Math.random()*nodes.length));
       lastFire=ts;
     }
@@ -1849,7 +1940,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       const baseO=Math.max(0,1-e.d/EDGE_DIST)*.32;
       const hebbO=e.w*.5;
       const fireO=active?Math.max(a.fire,b.fire)*.5:0;
-      const o=(baseO+hebbO+fireO)*Math.max(reveal,Math.max(a.fire,b.fire)*.6);
+      const o=(baseO+hebbO+fireO)*Math.max(reveal,Math.max(a.fire,b.fire)*.6)*(.5+(a.z+b.z)*.25);
       if(o<.008)continue;
       x.strokeStyle='rgba(95,207,128,'+Math.min(o,.7)+')';
       x.lineWidth=active?1:(.4+e.w*1.4);
@@ -1858,7 +1949,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
     // update + draw signals — reveal-gated but fire state keeps them alive
     for(let i=signals.length-1;i>=0;i--){
-      const s=signals[i];s.t+=SIGNAL_SPEED;
+      const s=signals[i];s.t+=SIGNAL_SPEED*SPEED;
       if(s.t>=1){fireNode(s.to);signals.splice(i,1);continue}
       const a=nodes[s.edge.a],b=nodes[s.edge.b];
       const sx=s.from===s.edge.a?a.x+(b.x-a.x)*s.t:a.x+(b.x-a.x)*(1-s.t);
@@ -1871,11 +1962,17 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       x.beginPath();x.arc(sx,sy,5,0,7);x.fill();
     }
 
-    // draw nodes — reveal-gated, fire adds temporary visibility
+    // draw nodes — reveal-gated, fire adds temporary visibility, depth scales brightness
+    const breath=(ts||0)*.0016*SPEED;
     for(const n of nodes){
       const f=n.fire;
       const reveal=nodeReveal(n);
-      const vis=Math.max(reveal,f*.7);
+      const vis=Math.max(reveal,f*.7)*(.55+n.z*.45);
+      if(n.z>.8&&vis>.05){
+        const b=.5+Math.sin(breath+n.phase)*.5;
+        x.fillStyle='rgba(95,207,128,'+(.07*b*vis)+')';
+        x.beginPath();x.arc(n.x,n.y,n.r+5+b*3,0,7);x.fill();
+      }
       if(vis<.02)continue;
       if(f>.05){
         x.fillStyle='rgba(95,207,128,'+(f*.15*vis)+')';
@@ -1885,7 +1982,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       x.beginPath();x.arc(n.x,n.y,n.r+f*1.5,0,7);x.fill();
     }
 
-    if(!reducedMotion)raf=requestAnimationFrame(step);
+    raf=requestAnimationFrame(step);
   }
   // cursor drawing on separate high-z-index canvas
   function drawCursor(ts){
@@ -1926,8 +2023,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     cx.beginPath();cx.arc(mouse.x,mouse.y,.8,0,7);cx.fill();
     requestAnimationFrame(drawCursor);
   }
-  if(reducedMotion)return;
-  requestAnimationFrame(drawCursor);
+  if(!reducedMotion)requestAnimationFrame(drawCursor);
   raf=requestAnimationFrame(step);
 
   document.addEventListener('visibilitychange',()=>{
