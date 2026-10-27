@@ -194,7 +194,7 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .role .sep{color:var(--dim-2);margin:0 6px}
 .loc{font-family:var(--mono);font-size:13px;color:var(--dim);margin-bottom:30px}
 .loc .pin{color:var(--accent)}
-.lede{color:var(--dim);font-size:15px;max-width:480px;margin-bottom:34px;line-height:1.72}
+.lede{color:var(--dim);font-size:15px;max-width:480px;margin-bottom:30px;line-height:1.72}
 .lede strong{color:var(--fg-2);font-weight:500}
 .lede .hl{color:var(--accent)}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
@@ -274,7 +274,7 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .pcard.is-active::after{opacity:.65}
 @media(max-width:980px){
   .project-stage{display:block}
-  #project-inspector{position:relative;top:auto;margin-top:18px}
+  #project-inspector{position:relative;top:auto;margin-top:18px;max-height:none;overflow:visible}
 }
 @media(max-width:720px){.proj-grid{grid-template-columns:1fr}.pcard{min-height:0}}
 .pcard{border:1px solid var(--border);border-radius:var(--rad);background:var(--surface);padding:22px;
@@ -289,7 +289,7 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .pcard:hover::before{opacity:1}
 .pcard:hover::after{opacity:.5}
 .pcard:active{transform:scale(.97)!important;border-color:var(--accent);background:var(--surface-2)}
-.pcard-viz{display:none;height:140px;margin:-20px -20px 18px;border-radius:var(--rad) var(--rad) 0 0;
+.pcard-viz{display:block;height:140px;margin:-22px -22px 18px;border-radius:var(--rad) var(--rad) 0 0;
   position:relative;overflow:hidden;border-bottom:1px solid var(--border);
   background:radial-gradient(120% 80% at 100% 0%,rgba(95,207,128,.10),transparent 60%),var(--surface-2);
   transition:background .3s}
@@ -311,7 +311,7 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 .tags span:hover{border-color:var(--accent);background:rgba(95,207,128,.15)}
 
 /* ============ PROJECT EVIDENCE RAIL ============ */
-#project-inspector{position:sticky;top:94px;z-index:10;width:auto;min-width:0;padding:20px 20px 21px;
+#project-inspector{position:sticky;top:94px;z-index:10;width:auto;min-width:0;padding:20px 20px 21px;max-height:calc(100vh - 110px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;
   border:1px solid var(--border-2);border-radius:14px;background:linear-gradient(145deg,rgba(20,20,26,.98),rgba(12,12,15,.96));
   box-shadow:0 24px 60px -24px rgba(0,0,0,.8),0 0 0 1px rgba(95,207,128,.04),0 0 28px rgba(95,207,128,.08);
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:1;visibility:visible;
@@ -340,6 +340,26 @@ h2.title:hover em{text-shadow:0 0 30px rgba(95,207,128,.25)}
 #project-inspector .pi-contribution-text{font-size:12px;line-height:1.5;color:var(--fg-2)}
 #project-inspector .pi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding-top:11px;border-top:1px solid var(--border)}
 #project-inspector .pi-cell{min-width:0}
+#project-inspector .pi-points{list-style:none;margin:0 0 15px;padding:0;display:grid;gap:6px}
+#project-inspector .pi-points[hidden]{display:none}
+#project-inspector .pi-points li{position:relative;padding-left:14px;font-size:12px;line-height:1.5;color:var(--fg-2)}
+#project-inspector .pi-points li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:1px;background:var(--accent)}
+#project-inspector .pi-note{margin:13px 0 0;font-family:var(--mono);font-size:10px;line-height:1.5;color:var(--dim)}
+#project-inspector .pi-note[hidden]{display:none}
+#project-inspector .pi-note::before{content:"// ";color:var(--accent)}
+.pfilters{display:flex;gap:6px;flex-wrap:wrap;margin-top:22px}
+.pfilters button{font-family:var(--mono);font-size:11.5px;color:var(--dim);background:transparent;border:1px solid var(--border);padding:6px 12px;border-radius:999px;cursor:pointer;transition:.16s}
+.pfilters button:hover{color:var(--fg-2);border-color:var(--border-2)}
+.pfilters button[aria-pressed="true"]{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+.pcard[hidden]{display:none}
+.hstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:34px;max-width:560px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--border)}
+.hstats div{background:var(--surface);padding:12px 14px}
+.hstats b{display:block;font-family:var(--sans);font-size:20px;font-weight:650;color:var(--fg);letter-spacing:-.4px;line-height:1.2}
+.hstats b em{font-style:normal;color:var(--accent);font-size:.75em}
+.hstats span{display:block;font-family:var(--mono);font-size:9.5px;line-height:1.35;color:var(--dim);margin-top:3px}
+@media(max-width:560px){.hstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tl-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;opacity:.85;transition:.16s}
+.tl-link:hover{opacity:1;gap:9px}
 #project-inspector .pi-repo{display:inline-flex;align-items:center;gap:6px;margin-top:15px;font-family:var(--mono);font-size:11.5px;color:var(--accent);text-decoration:none;border:1px solid var(--border);border-radius:7px;padding:7px 11px;background:rgba(95,207,128,.045);transition:.16s}
 #project-inspector .pi-repo:hover{border-color:var(--accent);background:rgba(95,207,128,.12)}
 #project-inspector .pi-repo[hidden]{display:none}
@@ -458,6 +478,10 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 .proj-grid.rv.in .pcard:nth-child(2){animation-delay:.14s}
 .proj-grid.rv.in .pcard:nth-child(3){animation-delay:.23s}
 .proj-grid.rv.in .pcard:nth-child(4){animation-delay:.32s}
+.proj-grid.rv.in .pcard:nth-child(5){animation-delay:.41s}
+.proj-grid.rv.in .pcard:nth-child(6){animation-delay:.5s}
+.proj-grid.rv.in .pcard:nth-child(7){animation-delay:.59s}
+.proj-grid.rv.in .pcard:nth-child(8){animation-delay:.68s}
 .stack-grid.rv.in .stack-card{animation:stackIn .6s cubic-bezier(.2,.8,.2,1) both}
 .stack-grid.rv.in .stack-card:nth-child(1){animation-delay:.05s}
 .stack-grid.rv.in .stack-card:nth-child(2){animation-delay:.13s}
@@ -661,6 +685,13 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       <div class="cta rv">
         <a href="#projects" class="btn p" data-magnetic>view work <span class="ar">→</span></a>
         <a href="Daniel_Yamanoglu_CV.pdf" download class="btn" data-magnetic>download résumé <span class="ar">↓</span></a>
+        <a href="https://github.com/DanielYamanoglu" target="_blank" rel="noopener" class="btn" data-magnetic>github <span class="ar">↗</span></a>
+      </div>
+      <div class="hstats rv" aria-label="Highlights">
+        <div><b>6</b><span>public case studies</span></div>
+        <div><b>103</b><span>automated tests</span></div>
+        <div><b>91.7<em>%</em></b><span>turnover model acc.</span></div>
+        <div><b>2</b><span>AI/ML internships</span></div>
       </div>
     </div>
 
@@ -741,6 +772,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <div class="tl-tags">
           <span>Industrial Electronics</span><span>Data Acquisition</span><span>Predictive Maintenance</span><span>ML Pipeline Mapping</span>
         </div>
+        <a class="tl-link" href="#projects" data-case="pdm">related case study: predictive maintenance <span aria-hidden="true">→</span></a>
       </div>
 
       <div class="tl-item">
@@ -758,6 +790,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <div class="tl-tags">
           <span>Python</span><span>ML Pipelines</span><span>Predictive Analytics</span><span>HR Tech</span>
         </div>
+        <a class="tl-link" href="#projects" data-case="turnover">related case study: turnover prediction <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -768,12 +801,18 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
   <div class="wrap">
     <div class="kicker rv">selected work</div>
     <h2 class="title rv">things I've <em>built</em></h2>
-    <p class="sub rv">Agentic systems, marketplace platforms, control-inspired ML, and ongoing RAG research. <span class="inspect-note">Select a project to inspect its work and evidence.</span></p>
+    <p class="sub rv">Agentic systems, document AI, industrial ML and control. Every project links to code with measured results. <span class="inspect-note">Select a project to inspect its work and evidence.</span></p>
 
+    <div class="pfilters rv" role="group" aria-label="Filter projects">
+      <button type="button" aria-pressed="true" data-filter="all">all</button>
+      <button type="button" aria-pressed="false" data-filter="llm">llm · rag · agents</button>
+      <button type="button" aria-pressed="false" data-filter="ml">applied ml</button>
+      <button type="button" aria-pressed="false" data-filter="ctrl">control · iot</button>
+    </div>
     <div class="project-stage">
     <div class="proj-grid rv">
-      <article class="pcard" data-project="thesis" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Graduation thesis: EKF-integrated Fuzzy-CTC control">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="thesis" data-cat="ctrl" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Graduation thesis: EKF-integrated Fuzzy-CTC control">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-thesis" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -808,8 +847,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         </div>
       </article>
 
-      <article class="pcard" data-project="lifeos" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Life OS agentic knowledge system">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="lifeos" data-cat="llm" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Life OS agentic knowledge system">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-lo" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -867,8 +906,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         </div>
       </article>
 
-      <article class="pcard" data-project="matchfluence" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Matchfluence influencer marketing marketplace">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="matchfluence" data-cat="llm ml" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Matchfluence influencer marketing marketplace">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-mf" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -939,8 +978,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       </article>
 
 
-      <article class="pcard" data-project="ftsdoc" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="FtsDoc document intelligence">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="ftsdoc" data-cat="llm" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="FtsDoc document intelligence">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-fd" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -974,7 +1013,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
               <text x="7" y="69" font-size="5.5" fill="var(--fg-2)">}</text>
             </g>
           </g>
-        </svg><span class="pm">extract · structure · validate</span></div>
+        </svg><span class="pm">extract · structure</span></div>
         <div class="pcard-top">
           <h3>FtsDoc</h3>
         </div>
@@ -989,8 +1028,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         </div>
       </article>
 
-      <article class="pcard" data-project="pdm" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Predictive maintenance telemetry pipeline">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="pdm" data-cat="ml ctrl" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Predictive maintenance telemetry pipeline">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-pm" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -1006,7 +1045,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
           <g font-family="ui-monospace,monospace" font-size="6" fill="var(--dim)" opacity=".75">
             <text x="38" y="34">vibration rms · modbus / mqtt</text><text x="322" y="128">time →</text><text x="252" y="26" fill="#e0af68">anomaly</text>
           </g>
-        </svg><span class="pm">telemetry · anomaly · failure risk</span></div>
+        </svg><span class="pm">telemetry · failure risk</span></div>
         <div class="pcard-top">
           <h3>Predictive Maintenance Telemetry</h3>
         </div>
@@ -1021,8 +1060,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         </div>
       </article>
 
-      <article class="pcard" data-project="turnover" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Employee turnover prediction with SHAP">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="turnover" data-cat="ml" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Employee turnover prediction with SHAP">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-to" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -1042,7 +1081,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
           <g font-family="ui-monospace,monospace" font-size="6" fill="var(--dim)" opacity=".75">
             <text x="236" y="124">SHAP impact →</text><text x="330" y="40" fill="var(--accent)">risk ↑</text>
           </g>
-        </svg><span class="pm">xgboost · shap explanations</span></div>
+        </svg><span class="pm">xgboost · shap</span></div>
         <div class="pcard-top">
           <h3>Employee Turnover Prediction</h3>
         </div>
@@ -1059,7 +1098,7 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
 
       <!-- FinRobot is intentionally omitted from the public project index.
       <article class="pcard" data-project="finrobot" tabindex="0" aria-label="FinRobot Hybrid trading research project">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-fr" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -1122,8 +1161,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       </article>
       -->
 
-      <article class="pcard" data-project="rag" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Autonomous RAG pipelines research project">
-        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <article class="pcard" data-project="rag" data-cat="llm" role="button" tabindex="0" aria-controls="project-inspector" aria-pressed="false" aria-label="Autonomous RAG pipelines research project">
+        <div class="pcard-viz"><svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid-rg" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(95,207,128,.04)" stroke-width=".5"/>
@@ -1221,11 +1260,13 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
         <div class="pi-contribution-label">my contribution</div>
         <p class="pi-contribution-text"></p>
       </div>
+      <ul class="pi-points" hidden></ul>
       <div class="pi-grid">
         <div class="pi-cell"><span class="pi-label"></span><strong class="pi-value"></strong></div>
         <div class="pi-cell"><span class="pi-label"></span><strong class="pi-value"></strong></div>
         <div class="pi-cell"><span class="pi-label"></span><strong class="pi-value"></strong></div>
       </div>
+      <p class="pi-note" hidden></p>
       <a class="pi-repo" href="#" target="_blank" rel="noopener" hidden>view code on GitHub <span aria-hidden="true">↗</span></a>
     </aside>
     </div>
@@ -1362,10 +1403,12 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       contribution:'Designed and simulated the controller, EKF state estimation, and fuzzy compensation loop for the nonlinear manipulator.',
       evidence:'02 visual outputs',
       repo:'https://github.com/DanielYamanoglu/ekf-fuzzy-ctc-manipulator',
+      points:['EKF tuning: mean NIS 1.35 → 2.0, samples in 95% bound 90.3% → 95.5%.','Fuzzy gains cut peak disturbance deviation 12.5% but recover slower (1.67 → 2.46 s).','MATLAB original plus a NumPy port with 7 tests.'],
+      note:'Results from the thesis MATLAB runs; the trade-offs are shown, not hidden.',
       cells:[['disturbance','−12.5% peak'],['step error','−8.9% RMS'],['EKF bound','95.5%']],
       media:[
-        {src:'assets/projects/ekf-state-estimation.png',alt:'Fuzzy-CTC state estimation performance plots',label:'state estimation'},
-        {src:'assets/projects/ekf-baseline-vs-fuzzy.png',alt:'Baseline versus Fuzzy CTC comparison plots',label:'baseline vs fuzzy'}
+        {src:'assets/projects/ekf-state-estimation.webp',alt:'Fuzzy-CTC state estimation performance plots',label:'state estimation'},
+        {src:'assets/projects/ekf-baseline-vs-fuzzy.webp',alt:'Baseline versus Fuzzy CTC comparison plots',label:'baseline vs fuzzy'}
       ]
     },
     lifeos:{
@@ -1375,10 +1418,12 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       contribution:'Built the capture-to-memory flow, agent routing, hybrid graph + vector retrieval and an MCP server.',
       evidence:'02 visual outputs',
       repo:'https://github.com/DanielYamanoglu/lifeos',
+      points:['Hybrid retrieval fuses Qdrant vectors with Neo4j k-hop expansion (RRF), with a provenance trail per hit.','Idempotent ingestion: re-ingesting the same notes creates 0 duplicates.','MCP tools: search_memory, add_note, get_entity, plus a FastAPI layer.'],
+      note:'Public repo is a from-scratch version on fictional notes; small eval set.',
       cells:[['recall@5','0.955 hybrid'],['agents','3 + MCP'],['tests','32 passing']],
       media:[
         {src:'assets/projects/lifeos-flow.svg',alt:'Life OS agentic knowledge system flow diagram',label:'system flow'},
-        {src:'assets/projects/lifeos-knowledge-graph.png',alt:'Life OS knowledge graph visualization',label:'knowledge graph'}
+        {src:'assets/projects/lifeos-knowledge-graph.webp',alt:'Life OS knowledge graph visualization',label:'knowledge graph'}
       ]
     },
     matchfluence:{
@@ -1388,6 +1433,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       contribution:'Built backend infrastructure, creator/brand data models, matching workflows, and dashboard APIs.',
       evidence:'02 visual outputs',
       repo:'https://github.com/DanielYamanoglu/matchfluence-matching',
+      points:['SQL match_creators(): hard filters, then pgvector cosine order, under RLS.','Hybrid re-rank adds audience overlap, engagement, budget fit, past performance.','Every match returns a weighted score breakdown and a one-line reason.'],
+      note:'Matching engine rebuilt on synthetic data; product code stays private.',
       cells:[['nDCG@10','0.861 hybrid'],['retrieval','pgvector'],['backend','Supabase']],
       media:[
         {src:'assets/work/matchfluence/architecture.svg',alt:'Matching architecture: brief, embedding, pgvector retrieval, hybrid re-rank',label:'architecture'},
@@ -1401,6 +1448,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       contribution:'Built the BIO-labelled data generator, NER fine-tuning, LangChain structured extraction, CLI and API.',
       evidence:'01 visual output',
       repo:'https://github.com/DanielYamanoglu/ftsdoc',
+      points:['Fine-tuned BERT-mini token classifier: PERSON, ORG, DATE, MONEY, EMAIL, SKILL, INVOICE_NO, PART_NO.','LLM backend via LangChain with_structured_output, offline NER + regex fallback.','CLI `ftsdoc extract doc.pdf --json` and POST /extract.'],
+      note:'Trained on template-generated documents, so test scores are 1.0; real-world accuracy unmeasured.',
       cells:[['entities','8 types'],['fine-tune','2.8 min CPU'],['tests','20 passing']],
       media:[
         {src:'assets/work/ftsdoc/pipeline.svg',alt:'FtsDoc document intelligence pipeline',label:'pipeline'}
@@ -1413,6 +1462,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       contribution:'Reference build of the telemetry pipelines I worked on during my industrial internship, on a simulated plant.',
       evidence:'02 visual outputs',
       repo:'https://github.com/DanielYamanoglu/predictive-maintenance-telemetry',
+      points:['188,756 raw samples → 31,476 one-minute rows; 152 out-of-range values nulled.','Chunked Modbus reads (125-register limit), scaled PLC registers, MQTT per machine.','PR-AUC 0.901; first sustained alert 4.5–9.0 h before failure.'],
+      note:'Simulated plant, 4 held-out machines: pipeline validation, not a production benchmark.',
       cells:[['ROC-AUC','0.989'],['early warning','4.5–9 h'],['tests','17 passing']],
       media:[
         {src:'assets/work/pdm/sensor_traces_anomalies.webp',alt:'Sensor traces with detected anomalies',label:'anomaly detection'},
@@ -1426,6 +1477,8 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       contribution:'Trained and deployed the XGBoost turnover model behind an HR people-analytics dashboard.',
       evidence:'02 visual outputs',
       repo:'https://github.com/DanielYamanoglu/employee-turnover-prediction',
+      points:['Top drivers: overtime, stock options, previous employers, age, commute, income.','Class weighting for a 16% minority, stratified 5-fold CV, single held-out test.','CLI scores one employee: probability, risk band, top SHAP drivers.'],
+      note:'91.7% is the internship model on company data; public re-implementation: 0.854 CV accuracy.',
       cells:[['internship','91.7% acc'],['public CV','0.854 acc'],['explain','SHAP']],
       media:[
         {src:'assets/work/turnover/shap_summary.webp',alt:'SHAP summary plot',label:'SHAP drivers'},
@@ -1521,6 +1574,12 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       cell.querySelector('.pi-label').textContent=pair[0];
       cell.querySelector('.pi-value').textContent=pair[1];
     });
+    const points=inspector.querySelector('.pi-points');
+    points.replaceChildren(...(data.points||[]).map(t=>{const li=document.createElement('li');li.textContent=t;return li}));
+    points.hidden=!(data.points||[]).length;
+    const note=inspector.querySelector('.pi-note');
+    note.textContent=data.note||'';
+    note.hidden=!data.note;
     const repo=inspector.querySelector('.pi-repo');
     repo.hidden=!data.repo;
     if(data.repo)repo.href=data.repo;
@@ -1583,6 +1642,25 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
       show(active||cards[0]);
     }
   });
+  document.querySelectorAll('.pfilters button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const f=btn.dataset.filter;
+      document.querySelectorAll('.pfilters button').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+      cards.forEach(card=>{card.hidden=!(f==='all'||card.dataset.cat.split(' ').includes(f))});
+      if(active&&active.hidden){pinned=false;show(cards.find(c=>!c.hidden))}
+    });
+  });
+  document.querySelectorAll('[data-case]').forEach(link=>{
+    link.addEventListener('click',e=>{
+      const card=cards.find(c=>c.dataset.project===link.dataset.case);
+      if(!card)return;
+      e.preventDefault();
+      document.querySelectorAll('.pfilters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter==='all')));
+      cards.forEach(c=>c.hidden=false);
+      pinned=true;show(card);
+      card.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+    });
+  });
   show(cards[0]);
 })();
 
@@ -1610,9 +1688,10 @@ footer::before{content:"";position:absolute;top:-1px;left:0;right:0;height:1px;
     elements.forEach(el=>el.classList.add('in'));
     return;
   }
+  if(!('IntersectionObserver' in window)){elements.forEach(el=>el.classList.add('in'));return}
   const io=new IntersectionObserver((es)=>es.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:0,rootMargin:'0px 0px -8% 0px'});
+  elements.forEach(el=>io.observe(el));
 })();
 
 /* ============ year ============ */
@@ -1646,8 +1725,15 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       if(d<EDGE_DIST)edges.push({a:i,b:j,d:d,w:0});
     }
   }
-  function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;cc.width=W;cc.height=H;buildGraph()}
-  addEventListener('resize',rs);rs();
+  // Mobile browsers fire resize when the URL bar hides/shows; only rebuild the graph on a real
+  // size change, and drop in-flight signals/attentions that point at the old graph's nodes.
+  function rs(){
+    const nw=innerWidth,nh=innerHeight,rebuild=!nodes.length||nw!==W||Math.abs(nh-H)>120;
+    W=cv.width=nw;H=cv.height=nh;cc.width=W;cc.height=H;
+    if(rebuild){signals=[];attentions=[];buildGraph()}
+  }
+  let rsTimer=null;
+  addEventListener('resize',()=>{clearTimeout(rsTimer);rsTimer=setTimeout(rs,150)});rs();
   addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
   function nodeReveal(n){
     if(isTouch)return 1;
@@ -1789,7 +1875,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   }
   // cursor drawing on separate high-z-index canvas
   function drawCursor(ts){
-    if(isTouch||mouse.x<-1000){requestAnimationFrame(drawCursor);return}
+    if(isTouch)return;
+    if(!running||mouse.x<-1000){requestAnimationFrame(drawCursor);return}
     cx.clearRect(0,0,W,H);
     const pulse=.6+Math.sin(ts*.005)*.2;
     // find 3 nearest nodes
@@ -1825,12 +1912,12 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     cx.beginPath();cx.arc(mouse.x,mouse.y,.8,0,7);cx.fill();
     requestAnimationFrame(drawCursor);
   }
-  drawCursor();
-  step();
+  requestAnimationFrame(drawCursor);
+  raf=requestAnimationFrame(step);
 
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden){running=false;if(raf){cancelAnimationFrame(raf);raf=null}}
-    else if(!running){running=true;step()}
+    else if(!running){running=true;lastFire=0;raf=requestAnimationFrame(step)}
   });
 })();
 
